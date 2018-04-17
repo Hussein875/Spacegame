@@ -1,9 +1,9 @@
 //
 //  GameScene.swift
-//  SpacegameReloaded
+//  Spacegame
 //
-//  Created by Training on 01/10/2016.
-//  Copyright © 2016 Training. All rights reserved.
+//  Created by Hussein Souleiman on 10/04/2018.
+//  Copyright © 2018 Hussein Souleiman. All rights reserved.
 //
 
 import SpriteKit
@@ -22,14 +22,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var powerUp:SKSpriteNode!
     
     var levelLabelNode: SKLabelNode!
+    var levelNumberNode: SKLabelNode!
     var gameLevel: Int = 1
     
     var ammoLabel: SKLabelNode!
     var ammoCountLabel: SKLabelNode!
     var ammoCount: Int = 100
-
+    
     var alienSpeed = 6
-
+    
     var players = [Player]()
     
     var score:Int = 0 {
@@ -41,6 +42,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameTimer:Timer!
     var alienTimer:Timer!
     var powerUpTimer:Timer!
+    var bossTorpedoTimer:Timer!
+    var nextLevelTimer:Timer!
     
     var possibleAliens = ["alien", "alien2", "alien3"]
     var possiblePowerUps: [Int:String] = [0:"double",1:"heart"]
@@ -49,11 +52,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let photonTorpedoCategory:UInt32 = 0x1 << 0
     
     let powerUpCategory:UInt32 = 0x1 << 2
+    let playerCategory:UInt32 = 0x1 << 3
+    let bossTorpedoCategory:UInt32 = 0x1 << 4
+    
     
     let motionManger = CMMotionManager()
     var xAcceleration:CGFloat = 0
     
     var livesArray:[SKSpriteNode]!
+    
+    func killAlTimer(){
+        if(gameTimer != nil){
+            gameTimer.invalidate()
+            gameTimer = nil
+        }
+        if(alienTimer != nil) {
+            alienTimer.invalidate()
+            alienTimer = nil
+        }
+        if(powerUpTimer != nil) {
+            
+            powerUpTimer.invalidate()
+            powerUpTimer = nil
+        }
+        if(bossTorpedoTimer != nil) {
+            bossTorpedoTimer.invalidate()
+            bossTorpedoTimer = nil
+        }
+        if(nextLevelTimer != nil) {
+            nextLevelTimer.invalidate()
+            nextLevelTimer = nil
+        }
+    }
     
     
     override func didMove(to view: SKView) {
@@ -70,7 +100,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addLives()
         
         starfield = SKEmitterNode(fileNamed: "Starfield")
-        starfield.position = CGPoint(x: 0, y: 1472)
+        starfield.position = CGPoint(x: 0, y: 812)
         starfield.advanceSimulationTime(10)
         self.addChild(starfield)
         
@@ -89,6 +119,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontSize = 28
         scoreLabel.fontColor = UIColor.white
         self.addChild(scoreLabel)
+        
+        levelNumberNode = SKLabelNode(text: "\(gameLevel)")
+        levelNumberNode.position = CGPoint(x: self.frame.size.width - 50, y: self.frame.size.height - 130)
+        levelNumberNode.fontName = "AmericanTypewriter-Bold"
+        levelNumberNode.fontSize = 28
+        levelNumberNode.fontColor = UIColor.white
+        self.addChild(levelNumberNode)
         
         ammoCountLabel = SKLabelNode(text: "\(ammoCount)")
         ammoCountLabel.position = CGPoint(x: self.frame.size.width - 50, y: self.frame.size.height - 100)
@@ -111,7 +148,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         self.addChild(levelLabelNode)
         
-        
         var timeInterval = 0.75
         var ammoTimerIntervall = 0.25
         
@@ -121,16 +157,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         alienTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
-        powerUpTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
-        gameTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(nextLvl), userInfo: nil, repeats: true)
+        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
+        nextLevelTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(nextLevel), userInfo: nil, repeats: true)
         gameTimer = Timer.scheduledTimer(withTimeInterval: ammoTimerIntervall, repeats: true, block: { (Timer) in
             if(self.ammoCount < 100){
-            self.ammoCount += 1
-            self.ammoCountLabel.text = "\(self.ammoCount)"
+                self.ammoCount += 1
+                self.ammoCountLabel.text = "\(self.ammoCount)"
             }
         })
         
-
+        
         motionManger.accelerometerUpdateInterval = 0.2
         motionManger.startAccelerometerUpdates(to: OperationQueue.current!) { (data:CMAccelerometerData?, error:Error?) in
             if let accelerometerData = data {
@@ -140,31 +176,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func nextLvl(){
-        gameLevel += 1
-        levelLabelNode.text = "Level \(gameLevel)"
-        levelLabelNode.isHidden = false
+    @objc func nextLevel(){
+        if(gameLevel < 5){
+            gameLevel += 1
+            levelNumberNode.text = String(gameLevel)
+            levelLabelNode.text = "Level \(gameLevel)"
+            levelLabelNode.isHidden = false
+        } else {
+            gameLevel += 1
+            levelNumberNode.text = String(gameLevel)
+            levelLabelNode.text = "Boss"
+            levelLabelNode.isHidden = false
+        }
         
-        gameTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { (Timer) in
+        
+        self.run(SKAction.wait(forDuration: 3)){
             self.levelLabelNode.isHidden = true
-        })
+        }
         
         if(alienSpeed > 2){
-        alienSpeed -= 1
+            alienSpeed -= 1
         }
+        
         
         if(gameLevel == 6){
             if alienTimer != nil {
                 alienTimer.invalidate()
                 alienTimer = nil
             }
+            if nextLevelTimer != nil {
+                nextLevelTimer.invalidate()
+                nextLevelTimer = nil
+            }
             
             for i in 0...aliveAlienArray.count - 1 {
                 aliveAlienArray[i].removeFromParent()
-            }
-            
-            for i in 0...ingamePowerupsArray.count - 1 {
-                ingamePowerupsArray[i].removeFromParent()
             }
             
             let animationDuration:TimeInterval = 5
@@ -176,18 +222,103 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             player.run(SKAction.sequence(actionArray))
             
-            gameTimer = Timer.scheduledTimer(withTimeInterval: 6, repeats: false, block: { (Timer) in
-                let transition = SKTransition.flipHorizontal(withDuration: 0.5 )
-                let gameOver = SKScene(fileNamed: "GameOverScene") as! GameOverScene
-                self.players[0].score += Int32(self.score)
-                gameOver.score = self.score
-                gameOver.win = true
-                self.view?.presentScene(gameOver, transition: transition)
-            })
-
+            gameTimer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(bossMode), userInfo: nil, repeats: false)
         }
     }
-
+    
+    @objc func bossMode(){
+        self.view?.isUserInteractionEnabled = false
+        self.run(SKAction.wait(forDuration: 6)){
+            self.view?.isUserInteractionEnabled = true
+        }
+        addPlayer()
+        addBoss()
+        
+        
+    }
+    
+    func addPlayer(){
+        player.removeFromParent()
+        
+        player = SKSpriteNode(imageNamed: self.players[0].spaceship!)
+        player.position = CGPoint(x: self.frame.size.width / 2, y: self.player.size.height / 2 - 20)
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        player.physicsBody?.isDynamic = true
+        
+        player.physicsBody?.categoryBitMask = playerCategory
+        player.physicsBody?.contactTestBitMask = bossTorpedoCategory
+        player.physicsBody?.collisionBitMask = 0
+        addChild(self.player)
+        
+        let animationDuration:TimeInterval = 2
+        
+        var actionArray = [SKAction]()
+        
+        actionArray.append(SKAction.move(to: CGPoint(x: self.frame.size.width / 2, y: self.player.size.height / 2 + 20), duration: animationDuration))
+        
+        player.run(SKAction.sequence(actionArray))
+    }
+    
+    
+    func addBoss(){
+        bossAlive = true
+        let alienboss = SKSpriteNode(imageNamed: "firstBoss")
+        
+        alienboss.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height + 100)
+        alienboss.physicsBody = SKPhysicsBody(rectangleOf: alienboss.size)
+        alienboss.physicsBody?.isDynamic = true
+        
+        alienboss.physicsBody?.categoryBitMask = alienCategory
+        alienboss.physicsBody?.contactTestBitMask = photonTorpedoCategory
+        alienboss.physicsBody?.collisionBitMask = 0
+        
+        self.addChild(alienboss)
+        
+        let animationDuration:TimeInterval = 5
+        
+        var actionArray = [SKAction]()
+        var rightleftArray = [SKAction]()
+        
+        actionArray.append(SKAction.move(to: CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height - 150), duration: animationDuration))
+        rightleftArray.append(SKAction.move(to: CGPoint(x: 25, y: self.frame.size.height - 150), duration: 3))
+        rightleftArray.append(SKAction.move(to: CGPoint(x: self.frame.size.width+100, y: self.frame.size.height - 150), duration: 3))
+        
+        alienboss.run(SKAction.sequence(actionArray))
+        
+        gameTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { (Timer) in
+            alienboss.run(SKAction.sequence(rightleftArray))
+        })
+        
+        self.run(SKAction.wait(forDuration: 5)){
+            self.fireBossTopedos(alienboss: alienboss)
+        }
+    }
+    
+    func fireBossTopedos(alienboss: SKSpriteNode){
+        bossTorpedoTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (Timer) in
+            let bossTorpedoNode = SKSpriteNode(imageNamed: "yellow")
+            
+            bossTorpedoNode.position = alienboss.position
+            bossTorpedoNode.position.y -= 5
+            bossTorpedoNode.physicsBody = SKPhysicsBody(circleOfRadius: bossTorpedoNode.size.width / 2)
+            bossTorpedoNode.physicsBody?.isDynamic = true
+            
+            bossTorpedoNode.physicsBody?.categoryBitMask = self.bossTorpedoCategory
+            bossTorpedoNode.physicsBody?.contactTestBitMask = self.playerCategory
+            bossTorpedoNode.physicsBody?.collisionBitMask = 0
+            bossTorpedoNode.physicsBody?.usesPreciseCollisionDetection = true
+            
+            self.addChild(bossTorpedoNode)
+            
+            var actionArrayTorpedoBoss = [SKAction]()
+            
+            actionArrayTorpedoBoss.append(SKAction.move(to: CGPoint(x: alienboss.position.x, y: -10), duration: 2))
+            actionArrayTorpedoBoss.append(SKAction.removeFromParent())
+            
+            bossTorpedoNode.run(SKAction.sequence(actionArrayTorpedoBoss))
+        })
+    }
+    
     func loadData(){
         let playerRequest:NSFetchRequest<Player> = Player.fetchRequest()
         
@@ -210,13 +341,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     var selectedPowerup:String = ""
-
-    func addPowerUp() {
-        let random = Int(arc4random_uniform(UInt32(possiblePowerUps.count)))
-        
+    
+    @objc func addPowerUp() {
+        var random = Int(arc4random_uniform(UInt32(possiblePowerUps.count)))
+        if(livesArray.count == 4) {
+            random = 0
+        }
         let powerUp = SKSpriteNode(imageNamed: possiblePowerUps[random]!)
         selectedPowerup = possiblePowerUps[random]!
-
+        
         let randomPowerUpPosition = GKRandomDistribution(lowestValue: 0, highestValue: 360)
         let position = CGFloat(randomPowerUpPosition.nextInt())
         
@@ -246,7 +379,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var aliveAlienArray: [SKSpriteNode] = []
     var ingamePowerupsArray: [SKSpriteNode] = []
     
-    func addAlien () {
+    func loseLife() {
+        self.run(SKAction.playSoundFileNamed("lose.mp3", waitForCompletion: false))
+        
+        if self.livesArray.count > 0 {
+            let liveNode = self.livesArray.last
+            liveNode!.removeFromParent()
+            self.livesArray.removeLast()
+            
+            
+            if self.livesArray.count == 0 {
+                self.run(SKAction.playSoundFileNamed("lose.mp3", waitForCompletion: false))
+                self.player.removeFromParent()
+                gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { (Timer) in
+                    let transition = SKTransition.flipHorizontal(withDuration: 0.5 )
+                    let gameOver = SKScene(fileNamed: "GameOverScene") as! GameOverScene
+                    self.players[0].score += Int32(self.score)
+                    gameOver.score = self.score
+                    self.killAlTimer()
+                    self.view?.presentScene(gameOver, transition: transition)
+                })
+                
+            }
+        }
+    }
+    
+    @objc func addAlien () {
         possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [String]
         
         let alien = SKSpriteNode(imageNamed: possibleAliens[0])
@@ -273,21 +431,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         actionArray.append(SKAction.move(to: CGPoint(x: position, y: -alien.size.height), duration: animationDuration))
         actionArray.append(SKAction.run {
-            self.run(SKAction.playSoundFileNamed("lose.mp3", waitForCompletion: false))
             
-            if self.livesArray.count > 0 {
-                let liveNode = self.livesArray.last
-                liveNode!.removeFromParent()
-                self.livesArray.removeLast()
-                
-                if self.livesArray.count == 0 {
-                    let transition = SKTransition.flipHorizontal(withDuration: 0.5 )
-                    let gameOver = SKScene(fileNamed: "GameOverScene") as! GameOverScene
-                    self.players[0].score += Int32(self.score)
-                    gameOver.score = self.score
-                    self.view?.presentScene(gameOver, transition: transition)
-                }
-            }
+            self.loseLife()
             
         })
         actionArray.append(SKAction.removeFromParent())
@@ -304,13 +449,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     var double:Bool = false
+    
     func fireTorpedo() {
-
+        
         self.run(SKAction.playSoundFileNamed("torpedo.mp3", waitForCompletion: false))
         
         let torpedoNode = SKSpriteNode(imageNamed: players[0].ammo!)
         let torpedoNode2 = SKSpriteNode(imageNamed: players[0].ammo!)
-
+        
         if(double){
             torpedoNode2.position = player.position
             torpedoNode2.position.y += 50
@@ -331,13 +477,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         torpedoNode.physicsBody?.categoryBitMask = photonTorpedoCategory
         torpedoNode.physicsBody?.contactTestBitMask = alienCategory
+        torpedoNode.physicsBody?.contactTestBitMask = bossTorpedoCategory
         torpedoNode.physicsBody?.collisionBitMask = 0
         torpedoNode.physicsBody?.usesPreciseCollisionDetection = true
         
         self.addChild(torpedoNode)
         
         let animationDuration:TimeInterval = 0.3
-    
+        
         var actionArray = [SKAction]()
         
         actionArray.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
@@ -361,37 +508,123 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
-
+        
+        
+        
         if (firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & alienCategory) != 0 {
-           torpedoDidCollideWithAlien(torpedoNode: firstBody.node as! SKSpriteNode, alienNode: secondBody.node as! SKSpriteNode)
+            torpedoDidCollideWithAlien(torpedoNode: firstBody.node as! SKSpriteNode, alienNode: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & powerUpCategory) == 4 {
             torpedoDidCollideWithPowerUp(torpedoNode: firstBody.node as! SKSpriteNode, powerUpNode: secondBody.node as! SKSpriteNode)
         }
+        if(firstBody.categoryBitMask & playerCategory) != 0 && (secondBody.categoryBitMask & bossTorpedoCategory) == 16 {
+            bossTorpedoDidCollideWithPlayer(playerNode: firstBody.node as! SKSpriteNode, torpedoNode: secondBody.node as! SKSpriteNode)
+        }
+        if(firstBody.categoryBitMask & photonTorpedoCategory) == 1 && (secondBody.categoryBitMask & bossTorpedoCategory) == 16 {
+            torpedoDidCollideWithTorpedo(torpedoNode: firstBody.node as! SKSpriteNode, bossTorpedoNode: secondBody.node as! SKSpriteNode)
+            
+        }
     }
     
-    
-    func torpedoDidCollideWithAlien (torpedoNode:SKSpriteNode, alienNode:SKSpriteNode) {
-
+    func bossTorpedoDidCollideWithPlayer(playerNode:SKSpriteNode, torpedoNode:SKSpriteNode) {
         let explosion = SKEmitterNode(fileNamed: "Explosion")!
-        explosion.position = alienNode.position
+        explosion.position = playerNode.position
         self.addChild(explosion)
         
         self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
         
         torpedoNode.removeFromParent()
-        alienNode.removeFromParent()
         
-        self.run(SKAction.wait(forDuration: 2)) { 
+        self.run(SKAction.wait(forDuration: 2)) {
             explosion.removeFromParent()
         }
-        
-        score += 5
-        
+        loseLife()
     }
-
-
-
+    
+    func torpedoDidCollideWithTorpedo(torpedoNode:SKSpriteNode, bossTorpedoNode:SKSpriteNode) {
+        
+        let explosion = SKEmitterNode(fileNamed: "selectItem")!
+        explosion.position = torpedoNode.position
+        self.addChild(explosion)
+        
+        bossTorpedoNode.removeFromParent()
+        torpedoNode.removeFromParent()
+        
+        self.run(SKAction.wait(forDuration: 1)) {
+            explosion.removeFromParent()
+        }
+    }
+    
+    var bossAlive = false
+    var bosslifes = 3
+    func torpedoDidCollideWithAlien (torpedoNode:SKSpriteNode, alienNode:SKSpriteNode) {
+        
+        if bossAlive==true {
+            if bosslifes > 1 {
+                let explosion = SKEmitterNode(fileNamed: "bossExplosion")!
+                explosion.position = alienNode.position
+                self.addChild(explosion)
+                self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+                bosslifes -= 1
+                self.run(SKAction.wait(forDuration: 2)) {
+                    explosion.removeFromParent()
+                }
+            } else {
+                let explosion = SKEmitterNode(fileNamed: "Explosion")!
+                explosion.position = alienNode.position
+                self.addChild(explosion)
+                self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+                torpedoNode.removeFromParent()
+                alienNode.removeFromParent()
+                
+                self.run(SKAction.wait(forDuration: 2)) {
+                    explosion.removeFromParent()
+                }
+                score += 50
+                bosslifes = 0
+                bossAlive = false
+                if(bossTorpedoTimer != nil){
+                    bossTorpedoTimer.invalidate()
+                    bossTorpedoTimer = nil
+                }
+                let animationDuration:TimeInterval = 5
+                
+                var actionArray = [SKAction]()
+                
+                actionArray.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
+                actionArray.append(SKAction.removeFromParent())
+                
+                player.run(SKAction.sequence(actionArray))
+                
+                self.run(SKAction.wait(forDuration: 6)){
+                    let transition = SKTransition.flipHorizontal(withDuration: 0.5 )
+                    let gameOver = SKScene(fileNamed: "GameOverScene") as! GameOverScene
+                    self.players[0].score += Int32(self.score)
+                    gameOver.score = self.score
+                    gameOver.win = true
+                    self.killAlTimer()
+                    self.view?.presentScene(gameOver, transition: transition)
+                }
+            }
+        } else {
+            let explosion = SKEmitterNode(fileNamed: "Explosion")!
+            explosion.position = alienNode.position
+            self.addChild(explosion)
+            
+            self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+            
+            torpedoNode.removeFromParent()
+            alienNode.removeFromParent()
+            
+            self.run(SKAction.wait(forDuration: 2)) {
+                explosion.removeFromParent()
+            }
+            score += 5
+        }
+    }
+    
+    
+    
     func torpedoDidCollideWithPowerUp (torpedoNode:SKSpriteNode, powerUpNode:SKSpriteNode) {
         
         let explosion = SKEmitterNode(fileNamed: "powerUpExplosion")!
@@ -401,36 +634,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         torpedoNode.removeFromParent()
         powerUpNode.removeFromParent()
         
-//        self.run(SKAction.playSoundFileNamed("pickup.mp3", waitForCompletion: false))
+        //        self.run(SKAction.playSoundFileNamed("pickup.mp3", waitForCompletion: false))
         if(selectedPowerup == "double"){
-        powerUp = SKSpriteNode(imageNamed: "double")
-        powerUp.position = CGPoint(x: 40, y: self.frame.size.height - 95)
-        self.addChild(powerUp)
-        
-        double = true
-        gameTimer = Timer.scheduledTimer(withTimeInterval: 20, repeats: false, block: { (Timer) in
-            self.powerUp.removeFromParent()
-            self.double = false
-        self.run(SKAction.playSoundFileNamed("end.mp3", waitForCompletion: false))
-        })
-        self.run(SKAction.wait(forDuration: 1)) {
-            explosion.removeFromParent()
+            powerUp = SKSpriteNode(imageNamed: "double")
+            powerUp.position = CGPoint(x: 40, y: self.frame.size.height - 95)
+            self.addChild(powerUp)
+            
+            double = true
+            gameTimer = Timer.scheduledTimer(withTimeInterval: 20, repeats: false, block: { (Timer) in
+                self.powerUp.removeFromParent()
+                self.double = false
+                self.run(SKAction.playSoundFileNamed("end.mp3", waitForCompletion: false))
+            })
+            self.run(SKAction.wait(forDuration: 1)) {
+                explosion.removeFromParent()
+            }
         }
-    }
         if(selectedPowerup == "heart"){
             let liveNode = SKSpriteNode(imageNamed: "heart")
             if(livesArray.count == 3){
-            liveNode.position = CGPoint(x: self.frame.size.width - liveNode.size.width, y: self.frame.size.height - 60)
+                liveNode.position = CGPoint(x: self.frame.size.width - liveNode.size.width, y: self.frame.size.height - 60)
             } else if(livesArray.count == 2){
-            liveNode.position = CGPoint(x: self.frame.size.width - 2 * liveNode.size.width, y: self.frame.size.height - 60)
+                liveNode.position = CGPoint(x: self.frame.size.width - 2 * liveNode.size.width, y: self.frame.size.height - 60)
             } else if(livesArray.count == 1){
-            liveNode.position = CGPoint(x: self.frame.size.width - 3 * liveNode.size.width, y: self.frame.size.height - 60)
+                liveNode.position = CGPoint(x: self.frame.size.width - 3 * liveNode.size.width, y: self.frame.size.height - 60)
             } else {
                 print("Max Lives!")
             }
             if(livesArray.count < 4 && livesArray.count > 0){
-            self.addChild(liveNode)
-            livesArray.append(liveNode)
+                self.addChild(liveNode)
+                livesArray.append(liveNode)
             }
         }
     }
@@ -444,7 +677,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.position = CGPoint(x: -20, y: player.position.y)
         }
     }
-
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }

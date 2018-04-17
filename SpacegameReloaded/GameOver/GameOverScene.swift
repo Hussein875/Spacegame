@@ -38,7 +38,7 @@ class GameOverScene: SKScene {
         
         gameResultLabelNode = self.childNode(withName: "gameResultLabel") as! SKLabelNode
         if(win){
-            gameResultLabelNode.text = "WIN"
+            gameResultLabelNode.text = "YOU WIN"
         } else {
             gameResultLabelNode.text = "GAME OVER"
 
