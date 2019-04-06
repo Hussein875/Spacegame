@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576270547.451324"
+            timestampString = "576285406.890203"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "661"
-            endingLineNumber = "661"
+            startingLineNumber = "660"
+            endingLineNumber = "660"
             landmarkName = "torpedoDidCollideWithPowerUp(torpedoNode:powerUpNode:)"
             landmarkType = "7">
          </BreakpointContent>

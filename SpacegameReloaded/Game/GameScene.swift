@@ -106,8 +106,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         starfield.zPosition = -1
         
-
-        player = SKSpriteNode(imageNamed: players[0].spaceship!)
+        let spaceship = Constants.currentPlayer.spaceship! + ".png"
+        player = SKSpriteNode(imageNamed: spaceship)
         player.position = CGPoint(x: self.frame.size.width / 2, y: player.size.height / 2 + 20)
         self.addChild(player)
         
@@ -370,11 +370,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         ingamePowerupsArray.append(powerUp)
         
-        let animationDuration:TimeInterval = 6
+        //let animationDuration:TimeInterval = 6
         
         var actionArray = [SKAction]()
         
-        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -powerUp.size.height), duration: animationDuration))
+        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -powerUp.size.height), duration: TimeInterval(alienSpeed)))
         actionArray.append(SKAction.removeFromParent())
         powerUp.run(SKAction.sequence(actionArray))
     }
@@ -411,7 +411,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     @objc func addAlien () {
         let alienOrPowerUP = Int.random(in: 0...100)
         
-        if(alienOrPowerUP <= 4){
+        if(alienOrPowerUP <= 2){
             addPowerUp()
         } else {
         possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [String]
@@ -525,8 +525,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             torpedoDidCollideWithAlien(torpedoNode: firstBody.node as! SKSpriteNode, alienNode: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & powerUpCategory) == 4 {
-            torpedoDidCollideWithPowerUp(torpedoNode: firstBody.node as! SKSpriteNode,
-                                         powerUpNode: secondBody.node as! SKSpriteNode)
+            torpedoDidCollideWithPowerUp(torpedoNode: firstBody.node as! SKSpriteNode, powerUpNode: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask & playerCategory) != 0 && (secondBody.categoryBitMask & bossTorpedoCategory) == 16 {
             bossTorpedoDidCollideWithPlayer(playerNode: firstBody.node as! SKSpriteNode, torpedoNode: secondBody.node as! SKSpriteNode)
@@ -650,7 +649,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.run(SKAction.wait(forDuration: 2)) {
                 explosion.removeFromParent()
             }
-            score += 5
+            score += 50
         }
     }
     
