@@ -34,17 +34,19 @@ class MenuScene: SKScene {
             print("Could not save data \(error.localizedDescription)")
         }
         
-        //create new Player
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = appDelegate.persistentContainer.viewContext
-//        
-//        let entity = NSEntityDescription.entity(forEntityName: "Player", in: context)
-//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
-//        
-//        newUser.setValue("torpedo", forKey: "ammo")
-//        newUser.setValue("shuttle", forKey: "spaceship")
-//        newUser.setValue(1, forKey: "level")
-//        newUser.setValue(0, forKey: "score")
+//        create new Player
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Player", in: context)
+        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+        
+        newUser.setValue("torpedo", forKey: "ammo")
+        newUser.setValue("shuttle", forKey: "spaceship")
+        newUser.setValue(1, forKey: "level")
+        newUser.setValue(0, forKey: "score")
+        
+        Constants.players.append(newUser as! Player)
         
         starfield = self.childNode(withName: "starfield") as? SKEmitterNode
         starfield.advanceSimulationTime(10)

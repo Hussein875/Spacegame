@@ -158,7 +158,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         alienTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
-        powerUpTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
+        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
         nextLevelTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(nextLevel), userInfo: nil, repeats: true)
         gameTimer = Timer.scheduledTimer(withTimeInterval: ammoTimerIntervall, repeats: true, block: { (Timer) in
             if(self.ammoCount < 100){
