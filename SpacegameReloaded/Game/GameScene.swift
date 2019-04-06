@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameTimer:Timer!
     var alienTimer:Timer!
-    var powerUpTimer:Timer!
+//    var powerUpTimer:Timer!
     var bossTorpedoTimer:Timer!
     var nextLevelTimer:Timer!
     
@@ -70,11 +70,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             alienTimer.invalidate()
             alienTimer = nil
         }
-        if(powerUpTimer != nil) {
-            
-            powerUpTimer.invalidate()
-            powerUpTimer = nil
-        }
+//        if(powerUpTimer != nil) {
+//
+//            powerUpTimer.invalidate()
+//            powerUpTimer = nil
+//        }
         if(bossTorpedoTimer != nil) {
             bossTorpedoTimer.invalidate()
             bossTorpedoTimer = nil
@@ -158,7 +158,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         alienTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
-        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
+//        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
         nextLevelTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(nextLevel), userInfo: nil, repeats: true)
         gameTimer = Timer.scheduledTimer(withTimeInterval: ammoTimerIntervall, repeats: true, block: { (Timer) in
             if(self.ammoCount < 100){
@@ -409,6 +409,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     @objc func addAlien () {
+        let alienOrPowerUP = Int.random(in: 0...100)
+        
+        if(alienOrPowerUP <= 4){
+            addPowerUp()
+        } else {
         possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [String]
         
         let alien = SKSpriteNode(imageNamed: possibleAliens[0])
@@ -442,6 +447,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         actionArray.append(SKAction.removeFromParent())
         
         alien.run(SKAction.sequence(actionArray))
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
