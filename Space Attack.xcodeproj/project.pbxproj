@@ -29,6 +29,7 @@
 		D7DD742E2080CD4E008C100B /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DD742D2080CD4E008C100B /* ShopScene.swift */; };
 		D7DD743120810E3F008C100B /* selectItem.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7DD743020810E3F008C100B /* selectItem.sks */; };
 		D7DD7433208113C7008C100B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DD7432208113C7008C100B /* Assets.xcassets */; };
+		D7E312A3225820E6009B8B2F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E312A2225820E6009B8B2F /* Constants.swift */; };
 		D7EDE2A220856E0900A4CC2D /* bossExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7EDE2A120856E0900A4CC2D /* bossExplosion.sks */; };
 		D7FD8429207D5925007F7045 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7FD8428207D5925007F7045 /* MenuScene.sks */; };
 		D7FD842B207D5CE9007F7045 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FD842A207D5CE9007F7045 /* MenuScene.swift */; };
@@ -37,7 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		86CEE2051D9FC6210096FC63 /* Spacegame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spacegame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		86CEE2051D9FC6210096FC63 /* Space Attack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Space Attack.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CEE2081D9FC6210096FC63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86CEE20A1D9FC6210096FC63 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		86CEE20C1D9FC6210096FC63 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 		D7DD742D2080CD4E008C100B /* ShopScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
 		D7DD743020810E3F008C100B /* selectItem.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = selectItem.sks; sourceTree = "<group>"; };
 		D7DD7432208113C7008C100B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Sounds/Assets.xcassets; sourceTree = "<group>"; };
+		D7E312A2225820E6009B8B2F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D7EDE2A120856E0900A4CC2D /* bossExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bossExplosion.sks; sourceTree = "<group>"; };
 		D7FD8428207D5925007F7045 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		D7FD842A207D5CE9007F7045 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
@@ -90,7 +92,7 @@
 		86CEE2061D9FC6210096FC63 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				86CEE2051D9FC6210096FC63 /* Spacegame.app */,
+				86CEE2051D9FC6210096FC63 /* Space Attack.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,6 +100,7 @@
 		86CEE2071D9FC6210096FC63 /* SpacegameReloaded */ = {
 			isa = PBXGroup;
 			children = (
+				D7E3129F22582070009B8B2F /* Helpers */,
 				86CEE2081D9FC6210096FC63 /* AppDelegate.swift */,
 				86CEE2101D9FC6210096FC63 /* GameViewController.swift */,
 				86CEE20C1D9FC6210096FC63 /* Actions.sks */,
@@ -123,6 +126,14 @@
 				D7DD742D2080CD4E008C100B /* ShopScene.swift */,
 			);
 			path = Shop;
+			sourceTree = "<group>";
+		};
+		D7E3129F22582070009B8B2F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D7E312A2225820E6009B8B2F /* Constants.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		D7FD8425207D58EB007F7045 /* Game */ = {
@@ -181,9 +192,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		86CEE2041D9FC6210096FC63 /* Spacegame */ = {
+		86CEE2041D9FC6210096FC63 /* Space Attack */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 86CEE21D1D9FC6210096FC63 /* Build configuration list for PBXNativeTarget "Spacegame" */;
+			buildConfigurationList = 86CEE21D1D9FC6210096FC63 /* Build configuration list for PBXNativeTarget "Space Attack" */;
 			buildPhases = (
 				86CEE2011D9FC6210096FC63 /* Sources */,
 				86CEE2021D9FC6210096FC63 /* Frameworks */,
@@ -193,9 +204,9 @@
 			);
 			dependencies = (
 			);
-			name = Spacegame;
+			name = "Space Attack";
 			productName = SpacegameReloaded;
-			productReference = 86CEE2051D9FC6210096FC63 /* Spacegame.app */;
+			productReference = 86CEE2051D9FC6210096FC63 /* Space Attack.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -216,11 +227,12 @@
 					};
 				};
 			};
-			buildConfigurationList = 86CEE2001D9FC6210096FC63 /* Build configuration list for PBXProject "Spacegame" */;
+			buildConfigurationList = 86CEE2001D9FC6210096FC63 /* Build configuration list for PBXProject "Space Attack" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -229,7 +241,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				86CEE2041D9FC6210096FC63 /* Spacegame */,
+				86CEE2041D9FC6210096FC63 /* Space Attack */,
 			);
 		};
 /* End PBXProject section */
@@ -276,6 +288,7 @@
 				86CEE2111D9FC6210096FC63 /* GameViewController.swift in Sources */,
 				D7DD73D4207EB68E008C100B /* PlayerModel.xcdatamodeld in Sources */,
 				86CEE2091D9FC6210096FC63 /* AppDelegate.swift in Sources */,
+				D7E312A3225820E6009B8B2F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,7 +454,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		86CEE2001D9FC6210096FC63 /* Build configuration list for PBXProject "Spacegame" */ = {
+		86CEE2001D9FC6210096FC63 /* Build configuration list for PBXProject "Space Attack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				86CEE21B1D9FC6210096FC63 /* Debug */,
@@ -450,7 +463,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		86CEE21D1D9FC6210096FC63 /* Build configuration list for PBXNativeTarget "Spacegame" */ = {
+		86CEE21D1D9FC6210096FC63 /* Build configuration list for PBXNativeTarget "Space Attack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				86CEE21E1D9FC6210096FC63 /* Debug */,

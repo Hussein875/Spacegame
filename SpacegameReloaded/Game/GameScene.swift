@@ -106,6 +106,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         starfield.zPosition = -1
         
+
         player = SKSpriteNode(imageNamed: players[0].spaceship!)
         player.position = CGPoint(x: self.frame.size.width / 2, y: player.size.height / 2 + 20)
         self.addChild(player)
@@ -157,7 +158,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         alienTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
-        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
+        powerUpTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
         nextLevelTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(nextLevel), userInfo: nil, repeats: true)
         gameTimer = Timer.scheduledTimer(withTimeInterval: ammoTimerIntervall, repeats: true, block: { (Timer) in
             if(self.ammoCount < 100){
@@ -294,6 +295,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    var bossTorpedoArray: [SKSpriteNode] = []
+    
     func fireBossTopedos(alienboss: SKSpriteNode){
         bossTorpedoTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (Timer) in
             let bossTorpedoNode = SKSpriteNode(imageNamed: "yellow")
@@ -309,6 +312,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bossTorpedoNode.physicsBody?.usesPreciseCollisionDetection = true
             
             self.addChild(bossTorpedoNode)
+            self.bossTorpedoArray.append(bossTorpedoNode)
             
             var actionArrayTorpedoBoss = [SKAction]()
             
@@ -515,7 +519,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             torpedoDidCollideWithAlien(torpedoNode: firstBody.node as! SKSpriteNode, alienNode: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & powerUpCategory) == 4 {
-            torpedoDidCollideWithPowerUp(torpedoNode: firstBody.node as! SKSpriteNode, powerUpNode: secondBody.node as! SKSpriteNode)
+            torpedoDidCollideWithPowerUp(torpedoNode: firstBody.node as! SKSpriteNode,
+                                         powerUpNode: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask & playerCategory) != 0 && (secondBody.categoryBitMask & bossTorpedoCategory) == 16 {
             bossTorpedoDidCollideWithPlayer(playerNode: firstBody.node as! SKSpriteNode, torpedoNode: secondBody.node as! SKSpriteNode)
@@ -564,10 +569,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let explosion = SKEmitterNode(fileNamed: "bossExplosion")!
                 explosion.position = alienNode.position
                 self.addChild(explosion)
+                
                 self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+                
+                let positiondeadBoss = alienNode.position
+                let bosskid = SKSpriteNode(imageNamed: "alien2")
+                bosskid.position = positiondeadBoss
+                self.addChild(bosskid)
+                
+                torpedoNode.removeFromParent()
+                alienNode.removeFromParent()
+                isUserInteractionEnabled = false
+                    
                 bosslifes -= 1
+                
                 self.run(SKAction.wait(forDuration: 2)) {
                     explosion.removeFromParent()
+                    self.addBoss()
+                }
+                self.run(SKAction.wait(forDuration: 7)) {
+                    self.isUserInteractionEnabled = true
                 }
             } else {
                 let explosion = SKEmitterNode(fileNamed: "Explosion")!
@@ -580,13 +601,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.run(SKAction.wait(forDuration: 2)) {
                     explosion.removeFromParent()
                 }
+                if bossTorpedoTimer != nil {
+                bossTorpedoTimer.invalidate()
+                bossTorpedoTimer = nil
+                }
+                for i in 0...bossTorpedoArray.count - 1 {
+                    bossTorpedoArray[i].removeFromParent()
+                }
                 score += 50
                 bosslifes = 0
                 bossAlive = false
-                if(bossTorpedoTimer != nil){
-                    bossTorpedoTimer.invalidate()
-                    bossTorpedoTimer = nil
-                }
+
                 let animationDuration:TimeInterval = 5
                 
                 var actionArray = [SKAction]()

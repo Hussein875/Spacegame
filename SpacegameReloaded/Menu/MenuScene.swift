@@ -11,7 +11,7 @@ import CoreData
 
 class MenuScene: SKScene {
     
-    var players = [Player]()
+    
     var managedObjectContext:NSManagedObjectContext!
     
     var starfield: SKEmitterNode!
@@ -34,27 +34,39 @@ class MenuScene: SKScene {
             print("Could not save data \(error.localizedDescription)")
         }
         
-        starfield = self.childNode(withName: "starfield") as! SKEmitterNode
+        //create new Player
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let context = appDelegate.persistentContainer.viewContext
+//        
+//        let entity = NSEntityDescription.entity(forEntityName: "Player", in: context)
+//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+//        
+//        newUser.setValue("torpedo", forKey: "ammo")
+//        newUser.setValue("shuttle", forKey: "spaceship")
+//        newUser.setValue(1, forKey: "level")
+//        newUser.setValue(0, forKey: "score")
+        
+        starfield = self.childNode(withName: "starfield") as? SKEmitterNode
         starfield.advanceSimulationTime(10)
         
-        newGameButtonNode = self.childNode(withName: "newGameButton") as! SKSpriteNode
+        newGameButtonNode = self.childNode(withName: "newGameButton") as? SKSpriteNode
         newGameButtonNode.texture = SKTexture(imageNamed: "newGameButton")
         
-        shopButtonNode = self.childNode(withName: "shopButton") as! SKSpriteNode
+        shopButtonNode = self.childNode(withName: "shopButton") as? SKSpriteNode
         shopButtonNode.texture = SKTexture(imageNamed: "shopButton")
         
-        difficultyButtonNode = self.childNode(withName: "difficultyButton") as! SKSpriteNode
+        difficultyButtonNode = self.childNode(withName: "difficultyButton") as? SKSpriteNode
         difficultyButtonNode.texture = SKTexture(imageNamed: "difficultyButton")
         
-        difficultyLabelNode = self.childNode(withName: "difficultyLabel") as! SKLabelNode
+        difficultyLabelNode = self.childNode(withName: "difficultyLabel") as? SKLabelNode
         
-        scoreLabelNode = self.childNode(withName: "scoreLabel") as! SKLabelNode
-        scoreLabelNode.text = String(players[0].score)
+        scoreLabelNode = self.childNode(withName: "scoreLabel") as? SKLabelNode
+        scoreLabelNode.text = String(Constants.players[0].score)
         
-        levelLabelNode = self.childNode(withName: "levelLabel") as! SKLabelNode
-        levelLabelNode.text = String(players[0].level)
+        levelLabelNode = self.childNode(withName: "levelLabel") as? SKLabelNode
+        levelLabelNode.text = String(Constants.players[0].level)
         
-        resetButtonNode = self.childNode(withName: "resetButton") as! SKSpriteNode
+        resetButtonNode = self.childNode(withName: "resetButton") as? SKSpriteNode
         resetButtonNode.texture = SKTexture(imageNamed: "resetButton")
         
         let userDefaults = UserDefaults.standard
@@ -65,7 +77,7 @@ class MenuScene: SKScene {
             difficultyLabelNode.text = "Easy"
         }
         
-        if players[0].level == 0 {
+        if Constants.players[0].level == 0 {
             setUp()
         }
     }
@@ -93,12 +105,12 @@ class MenuScene: SKScene {
     }
     
     func setUp(){
-        players[0].score = 0
-        scoreLabelNode.text = String(players[0].score)
-        players[0].level = 1
-        levelLabelNode.text = String(players[0].level)
-        players[0].ammo = "torpedo"
-        players[0].spaceship = "shuttle"
+        Constants.players[0].score = 0
+        scoreLabelNode.text = String(Constants.players[0].score)
+        Constants.players[0].level = 1
+        levelLabelNode.text = String(Constants.players[0].level)
+        Constants.players[0].ammo = "torpedo"
+        Constants.players[0].spaceship = "shuttle"
         do {
             try self.managedObjectContext.save()
         } catch {
@@ -124,7 +136,7 @@ class MenuScene: SKScene {
         let playerRequest:NSFetchRequest<Player> = Player.fetchRequest()
         
         do {
-            players = try managedObjectContext.fetch(playerRequest)
+            Constants.players = try managedObjectContext.fetch(playerRequest)
         } catch {
             print("Could not load data from database \(error.localizedDescription)")
         }
