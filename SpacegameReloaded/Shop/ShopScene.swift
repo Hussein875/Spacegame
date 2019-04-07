@@ -184,11 +184,12 @@ class ShopScene: SKScene {
             case "kaufenBtn":
                 let preis : Int = Int(ShopScene.preisNode.text ?? "9999")!
                 if Constants.currentPlayer.score >= preis {
+                    Constants.spaceship = ShopScene.selectedSpaceship!
                     Constants.currentPlayer.spaceship = ShopScene.spaceName
                     Constants.currentPlayer.ammo = ShopScene.ammoName
                     Constants.currentPlayer.score -= Int32(preis)
+                    Constants.currentPlayer.shipid = Int32(ShopScene.selectedSpaceship?.id as! Int)
                     ShopScene.cashLabelNode.text = String(Constants.currentPlayer.score)
-                    Constants.spaceship = ShopScene.selectedSpaceship!
                     
                 
                 explosion.position = (nodesArray.first?.position)!

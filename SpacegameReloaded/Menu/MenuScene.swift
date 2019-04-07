@@ -24,7 +24,15 @@ class MenuScene: SKScene {
     var shopButtonNode:SKSpriteNode!
     var levelLabelNode:SKLabelNode!
     
+    
+    //Load ship from Core Data by ID
+    func loadShip(){
+        Constants.spaceship = Constants.spaceships[Int(Constants.currentPlayer.shipid)]
+    }
+    
     override func didMove(to view: SKView) {
+        
+
         managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         do {
@@ -34,6 +42,7 @@ class MenuScene: SKScene {
             print("Could not save data \(error.localizedDescription)")
         }
         
+                loadShip()
 //        create new Player
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        let context = appDelegate.persistentContainer.viewContext

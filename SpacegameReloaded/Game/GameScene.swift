@@ -464,28 +464,169 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.run(SKAction.playSoundFileNamed("torpedo.mp3", waitForCompletion: false))
         
-        let torpedoNode = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+        let torpedoNode1 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
         let torpedoNode2 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+        let torpedoNode3 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+        let torpedoNode4 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+        let torpedoNode5 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+        let torpedoNode6 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+
+        var torpedoArray:[SKSpriteNode] = []
    
-        
-        
-        switch Constants.spaceship?.ammo {
-        case "ammo9":
-            torpedoNode.position = player.position
-            torpedoNode.position.y += 150
-            torpedoNode.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
-            torpedoNode.physicsBody?.isDynamic = true
+        switch Constants.currentPlayer.ammo! {
+        case "ammo9.png":
+//            print(double)
+//            if(double) {
+//                torpedoNode2.position = player.position
+//                torpedoNode2.position.y += 50
+//                torpedoNode2.position.x += 200
+//                torpedoNode2.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode2.size.width / 2)
+//                torpedoNode2.physicsBody?.isDynamic = true
+//                torpedoNode2.physicsBody?.categoryBitMask = photonTorpedoCategory
+//                torpedoNode2.physicsBody?.contactTestBitMask = alienCategory
+//                torpedoNode2.physicsBody?.contactTestBitMask = bossTorpedoCategory
+//                torpedoNode2.physicsBody?.collisionBitMask = 0
+//                torpedoNode2.physicsBody?.usesPreciseCollisionDetection = true
+//                self.addChild(torpedoNode2)
+//            }
             
-            torpedoNode.physicsBody?.categoryBitMask = photonTorpedoCategory
-            torpedoNode.physicsBody?.contactTestBitMask = alienCategory
-            torpedoNode.physicsBody?.contactTestBitMask = bossTorpedoCategory
-            torpedoNode.physicsBody?.collisionBitMask = 0
-            torpedoNode.physicsBody?.usesPreciseCollisionDetection = true
+            torpedoNode1.position = player.position
+            torpedoNode1.position.y += 5
+            torpedoNode1.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode1.size.width / 2)
+            torpedoNode1.physicsBody?.isDynamic = true
+            torpedoNode1.physicsBody?.categoryBitMask = photonTorpedoCategory
+            torpedoNode1.physicsBody?.contactTestBitMask = alienCategory
+            torpedoNode1.physicsBody?.contactTestBitMask = bossTorpedoCategory
+            torpedoNode1.physicsBody?.collisionBitMask = 0
+            torpedoNode1.physicsBody?.usesPreciseCollisionDetection = true
+            
+            self.addChild(torpedoNode1)
+            
+            let animationDuration:TimeInterval = 0.3
+            
+            var actionArray = [SKAction]()
+            var actionArray2 = [SKAction]()
+            
+            actionArray.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray.append(SKAction.removeFromParent())
+            actionArray2.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray2.append(SKAction.removeFromParent())
+
+            
+            torpedoNode1.run(SKAction.sequence(actionArray))
+            torpedoNode2.run(SKAction.sequence(actionArray2))
+
+            break
+        case "ammo7.png":
+            if(double){
+                torpedoNode4.position = player.position
+                torpedoNode4.position.y += 5
+                torpedoNode4.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode4.size.width / 2)
+                torpedoNode4.physicsBody?.isDynamic = true
+                torpedoNode4.physicsBody?.categoryBitMask = photonTorpedoCategory
+                torpedoNode4.physicsBody?.contactTestBitMask = alienCategory
+                torpedoNode4.physicsBody?.contactTestBitMask = bossTorpedoCategory
+                torpedoNode4.physicsBody?.collisionBitMask = 0
+                torpedoNode4.physicsBody?.usesPreciseCollisionDetection = true
+                
+                self.addChild(torpedoNode4)
+                
+                torpedoNode5.position = player.position
+                torpedoNode5.position.y += 5
+                torpedoNode5.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode5.size.width / 2)
+                torpedoNode5.physicsBody?.isDynamic = true
+                torpedoNode5.physicsBody?.categoryBitMask = photonTorpedoCategory
+                torpedoNode5.physicsBody?.contactTestBitMask = alienCategory
+                torpedoNode5.physicsBody?.contactTestBitMask = bossTorpedoCategory
+                torpedoNode5.physicsBody?.collisionBitMask = 0
+                torpedoNode5.physicsBody?.usesPreciseCollisionDetection = true
+                
+                self.addChild(torpedoNode5)
+                torpedoNode6.position = player.position
+                torpedoNode6.position.y += 5
+                torpedoNode6.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode6.size.width / 2)
+                torpedoNode6.physicsBody?.isDynamic = true
+                torpedoNode6.physicsBody?.categoryBitMask = photonTorpedoCategory
+                torpedoNode6.physicsBody?.contactTestBitMask = alienCategory
+                torpedoNode6.physicsBody?.contactTestBitMask = bossTorpedoCategory
+                torpedoNode6.physicsBody?.collisionBitMask = 0
+                torpedoNode6.physicsBody?.usesPreciseCollisionDetection = true
+                
+                self.addChild(torpedoNode6)
+                
+            }
+            torpedoNode1.position = player.position
+            torpedoNode1.position.y += 5
+            torpedoNode1.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode1.size.width / 2)
+            torpedoNode1.physicsBody?.isDynamic = true
+            torpedoNode1.physicsBody?.categoryBitMask = photonTorpedoCategory
+            torpedoNode1.physicsBody?.contactTestBitMask = alienCategory
+            torpedoNode1.physicsBody?.contactTestBitMask = bossTorpedoCategory
+            torpedoNode1.physicsBody?.collisionBitMask = 0
+            torpedoNode1.physicsBody?.usesPreciseCollisionDetection = true
+            
+            self.addChild(torpedoNode1)
+
+            torpedoNode2.position = player.position
+            torpedoNode2.position.y += 5
+            torpedoNode2.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode2.size.width / 2)
+            torpedoNode2.physicsBody?.isDynamic = true
+            torpedoNode2.physicsBody?.categoryBitMask = photonTorpedoCategory
+            torpedoNode2.physicsBody?.contactTestBitMask = alienCategory
+            torpedoNode2.physicsBody?.contactTestBitMask = bossTorpedoCategory
+            torpedoNode2.physicsBody?.collisionBitMask = 0
+            torpedoNode2.physicsBody?.usesPreciseCollisionDetection = true
+            
+            self.addChild(torpedoNode2)
+
+            torpedoNode3.position = player.position
+            torpedoNode3.position.y += 5
+            torpedoNode3.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode3.size.width / 2)
+            torpedoNode3.physicsBody?.isDynamic = true
+            torpedoNode3.physicsBody?.categoryBitMask = photonTorpedoCategory
+            torpedoNode3.physicsBody?.contactTestBitMask = alienCategory
+            torpedoNode3.physicsBody?.contactTestBitMask = bossTorpedoCategory
+            torpedoNode3.physicsBody?.collisionBitMask = 0
+            torpedoNode3.physicsBody?.usesPreciseCollisionDetection = true
+            
+            self.addChild(torpedoNode3)
+            
+            let animationDuration:TimeInterval = 0.3
+            
+            var actionArray = [SKAction]()
+            var actionArray2 = [SKAction]()
+            var actionArray3 = [SKAction]()
+            var actionArray4 = [SKAction]()
+            var actionArray5 = [SKAction]()
+            var actionArray6 = [SKAction]()
+
+            
+            actionArray.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray.append(SKAction.removeFromParent())
+            actionArray2.append(SKAction.move(to: CGPoint(x: player.position.x + 75, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray2.append(SKAction.removeFromParent())
+            actionArray3.append(SKAction.move(to: CGPoint(x: player.position.x - 75, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray3.append(SKAction.removeFromParent())
+            actionArray4.append(SKAction.move(to: CGPoint(x: player.position.x + 20, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray4.append(SKAction.removeFromParent())
+            actionArray5.append(SKAction.move(to: CGPoint(x: player.position.x + 200, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray5.append(SKAction.removeFromParent())
+            actionArray6.append(SKAction.move(to: CGPoint(x: player.position.x - 200, y: self.frame.size.height + 10), duration: animationDuration))
+            actionArray6.append(SKAction.removeFromParent())
+            
+            torpedoNode1.run(SKAction.sequence(actionArray))
+            torpedoNode2.run(SKAction.sequence(actionArray2))
+            torpedoNode3.run(SKAction.sequence(actionArray3))
+            torpedoNode4.run(SKAction.sequence(actionArray4))
+            torpedoNode5.run(SKAction.sequence(actionArray5))
+            torpedoNode6.run(SKAction.sequence(actionArray6))
+
+            break
         default:
             if(double){
                 torpedoNode2.position = player.position
                 torpedoNode2.position.y += 70
-                torpedoNode2.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
+                torpedoNode2.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode1.size.width / 2)
                 torpedoNode2.physicsBody?.isDynamic = true
                 
                 torpedoNode2.physicsBody?.categoryBitMask = photonTorpedoCategory
@@ -495,21 +636,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 self.addChild(torpedoNode2)
             }
-            torpedoNode.position = player.position
-            torpedoNode.position.y += 5
-            torpedoNode.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
-            torpedoNode.physicsBody?.isDynamic = true
+            torpedoNode1.position = player.position
+            torpedoNode1.position.y += 5
+            torpedoNode1.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode1.size.width / 2)
+            torpedoNode1.physicsBody?.isDynamic = true
             
-            torpedoNode.physicsBody?.categoryBitMask = photonTorpedoCategory
-            torpedoNode.physicsBody?.contactTestBitMask = alienCategory
-            torpedoNode.physicsBody?.contactTestBitMask = bossTorpedoCategory
-            torpedoNode.physicsBody?.collisionBitMask = 0
-            torpedoNode.physicsBody?.usesPreciseCollisionDetection = true
+            torpedoNode1.physicsBody?.categoryBitMask = photonTorpedoCategory
+            torpedoNode1.physicsBody?.contactTestBitMask = alienCategory
+            torpedoNode1.physicsBody?.contactTestBitMask = bossTorpedoCategory
+            torpedoNode1.physicsBody?.collisionBitMask = 0
+            torpedoNode1.physicsBody?.usesPreciseCollisionDetection = true
+            
+            self.addChild(torpedoNode1)
+
         }
         
-        
-        self.addChild(torpedoNode)
-        
+    
         let animationDuration:TimeInterval = 0.3
         
         var actionArray = [SKAction]()
@@ -517,7 +659,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         actionArray.append(SKAction.move(to: CGPoint(x: player.position.x, y: self.frame.size.height + 10), duration: animationDuration))
         actionArray.append(SKAction.removeFromParent())
         
-        torpedoNode.run(SKAction.sequence(actionArray))
+        torpedoNode1.run(SKAction.sequence(actionArray))
         if(double){
             torpedoNode2.run(SKAction.sequence(actionArray))
         }
@@ -540,6 +682,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var torpedosToKill : [SKSpriteNode] = []
         
         if (firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & alienCategory) != 0 {
+            print("Laser: \(Constants.spaceship?.laser)")
             if(Constants.spaceship!.laser) {
                 if(secondBody.node != nil) {
                     toKillArray.append(secondBody.node as! SKSpriteNode)
