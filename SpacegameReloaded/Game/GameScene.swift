@@ -41,12 +41,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameTimer:Timer!
     var alienTimer:Timer!
-//    var powerUpTimer:Timer!
+    //    var powerUpTimer:Timer!
     var bossTorpedoTimer:Timer!
     var nextLevelTimer:Timer!
     
     var possibleAliens = ["alien", "alien2", "alien3"]
-
+    
     var possiblePowerUps: [Int:String] = [0:"double",1:"heart"]
     
     let alienCategory:UInt32 = 0x1 << 1
@@ -71,11 +71,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             alienTimer.invalidate()
             alienTimer = nil
         }
-//        if(powerUpTimer != nil) {
-//
-//            powerUpTimer.invalidate()
-//            powerUpTimer = nil
-//        }
+        //        if(powerUpTimer != nil) {
+        //
+        //            powerUpTimer.invalidate()
+        //            powerUpTimer = nil
+        //        }
         if(bossTorpedoTimer != nil) {
             bossTorpedoTimer.invalidate()
             bossTorpedoTimer = nil
@@ -159,7 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         alienTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(addAlien), userInfo: nil, repeats: true)
-//        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
+        //        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
         nextLevelTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(nextLevel), userInfo: nil, repeats: true)
         gameTimer = Timer.scheduledTimer(withTimeInterval: ammoTimerIntervall, repeats: true, block: { (Timer) in
             if(self.ammoCount < 100){
@@ -167,7 +167,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.ammoCountLabel.text = "\(self.ammoCount)"
             }
         })
-        
         
         motionManger.accelerometerUpdateInterval = 0.2
         motionManger.startAccelerometerUpdates(to: OperationQueue.current!) { (data:CMAccelerometerData?, error:Error?) in
@@ -415,39 +414,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(alienOrPowerUP <= 2){
             addPowerUp()
         } else {
-        possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [String]
-        
-        let alien = SKSpriteNode(imageNamed: possibleAliens[0])
-        
-        let randomAlienPosition = GKRandomDistribution(lowestValue: 0, highestValue: 360)
-        let position = CGFloat(randomAlienPosition.nextInt())
-        
-        alien.position = CGPoint(x: position, y: self.frame.size.height + alien.size.height)
-        
-        alien.physicsBody = SKPhysicsBody(rectangleOf: alien.size)
-        alien.physicsBody?.isDynamic = true
-        
-        alien.physicsBody?.categoryBitMask = alienCategory
-        alien.physicsBody?.contactTestBitMask = photonTorpedoCategory
-        alien.physicsBody?.collisionBitMask = 0
-        
-        self.addChild(alien)
-        
-        aliveAlienArray.append(alien)
-        
-        let animationDuration:TimeInterval = TimeInterval(alienSpeed)
-        
-        var actionArray = [SKAction]()
-        
-        actionArray.append(SKAction.move(to: CGPoint(x: position, y: -alien.size.height), duration: animationDuration))
-        actionArray.append(SKAction.run {
+            possibleAliens = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleAliens) as! [String]
             
-            self.loseLife()
+            let alien = SKSpriteNode(imageNamed: possibleAliens[0])
             
-        })
-        actionArray.append(SKAction.removeFromParent())
-        
-        alien.run(SKAction.sequence(actionArray))
+            let randomAlienPosition = GKRandomDistribution(lowestValue: 0, highestValue: 360)
+            let position = CGFloat(randomAlienPosition.nextInt())
+            
+            alien.position = CGPoint(x: position, y: self.frame.size.height + alien.size.height)
+            
+            alien.physicsBody = SKPhysicsBody(rectangleOf: alien.size)
+            alien.physicsBody?.isDynamic = true
+            
+            alien.physicsBody?.categoryBitMask = alienCategory
+            alien.physicsBody?.contactTestBitMask = photonTorpedoCategory
+            alien.physicsBody?.collisionBitMask = 0
+            
+            self.addChild(alien)
+            
+            aliveAlienArray.append(alien)
+            
+            let animationDuration:TimeInterval = TimeInterval(alienSpeed)
+            
+            var actionArray = [SKAction]()
+            
+            actionArray.append(SKAction.move(to: CGPoint(x: position, y: -alien.size.height), duration: animationDuration))
+            actionArray.append(SKAction.run {
+                
+                self.loseLife()
+                
+            })
+            actionArray.append(SKAction.removeFromParent())
+            
+            alien.run(SKAction.sequence(actionArray))
         }
     }
     
@@ -465,32 +464,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.run(SKAction.playSoundFileNamed("torpedo.mp3", waitForCompletion: false))
         
-        let torpedoNode = SKSpriteNode(imageNamed: players[0].ammo!)
-        let torpedoNode2 = SKSpriteNode(imageNamed: players[0].ammo!)
+        let torpedoNode = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+        let torpedoNode2 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
+   
         
-        if(double){
-            torpedoNode2.position = player.position
-            torpedoNode2.position.y += 50
-            torpedoNode2.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
-            torpedoNode2.physicsBody?.isDynamic = true
+        
+        switch Constants.spaceship?.ammo {
+        case "ammo9":
+            torpedoNode.position = player.position
+            torpedoNode.position.y += 150
+            torpedoNode.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
+            torpedoNode.physicsBody?.isDynamic = true
             
-            torpedoNode2.physicsBody?.categoryBitMask = photonTorpedoCategory
-            torpedoNode2.physicsBody?.contactTestBitMask = alienCategory
-            torpedoNode2.physicsBody?.collisionBitMask = 0
-            torpedoNode2.physicsBody?.usesPreciseCollisionDetection = true
+            torpedoNode.physicsBody?.categoryBitMask = photonTorpedoCategory
+            torpedoNode.physicsBody?.contactTestBitMask = alienCategory
+            torpedoNode.physicsBody?.contactTestBitMask = bossTorpedoCategory
+            torpedoNode.physicsBody?.collisionBitMask = 0
+            torpedoNode.physicsBody?.usesPreciseCollisionDetection = true
+        default:
+            if(double){
+                torpedoNode2.position = player.position
+                torpedoNode2.position.y += 70
+                torpedoNode2.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
+                torpedoNode2.physicsBody?.isDynamic = true
+                
+                torpedoNode2.physicsBody?.categoryBitMask = photonTorpedoCategory
+                torpedoNode2.physicsBody?.contactTestBitMask = alienCategory
+                torpedoNode2.physicsBody?.collisionBitMask = 0
+                torpedoNode2.physicsBody?.usesPreciseCollisionDetection = true
+                
+                self.addChild(torpedoNode2)
+            }
+            torpedoNode.position = player.position
+            torpedoNode.position.y += 5
+            torpedoNode.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
+            torpedoNode.physicsBody?.isDynamic = true
             
-            self.addChild(torpedoNode2)
+            torpedoNode.physicsBody?.categoryBitMask = photonTorpedoCategory
+            torpedoNode.physicsBody?.contactTestBitMask = alienCategory
+            torpedoNode.physicsBody?.contactTestBitMask = bossTorpedoCategory
+            torpedoNode.physicsBody?.collisionBitMask = 0
+            torpedoNode.physicsBody?.usesPreciseCollisionDetection = true
         }
-        torpedoNode.position = player.position
-        torpedoNode.position.y += 5
-        torpedoNode.physicsBody = SKPhysicsBody(circleOfRadius: torpedoNode.size.width / 2)
-        torpedoNode.physicsBody?.isDynamic = true
         
-        torpedoNode.physicsBody?.categoryBitMask = photonTorpedoCategory
-        torpedoNode.physicsBody?.contactTestBitMask = alienCategory
-        torpedoNode.physicsBody?.contactTestBitMask = bossTorpedoCategory
-        torpedoNode.physicsBody?.collisionBitMask = 0
-        torpedoNode.physicsBody?.usesPreciseCollisionDetection = true
         
         self.addChild(torpedoNode)
         
@@ -520,14 +536,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        
+        var toKillArray : [SKSpriteNode] = []
+        var torpedosToKill : [SKSpriteNode] = []
         
         if (firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & alienCategory) != 0 {
-            //Firstbody is null, weil Torpedeo beide Aliens trifft und null wird.
-            if(firstBody.node != nil) {
-            torpedoDidCollideWithAlien(torpedoNode: firstBody.node as! SKSpriteNode, alienNode: secondBody.node as! SKSpriteNode)
+            if(Constants.spaceship!.laser) {
+                if(secondBody.node != nil) {
+                    toKillArray.append(secondBody.node as! SKSpriteNode)
+                    torpedoDidCollideWithAlien(tokillArray: toKillArray)
+                } else {
+                    torpedoDidCollideWithAlien(torpedoNode: firstBody.node as? SKSpriteNode)
+                }
+            } else {
+                toKillArray.append(secondBody.node as! SKSpriteNode)
+                torpedoDidCollideWithAlien(torpedoNode: firstBody.node as? SKSpriteNode, tokillArray: toKillArray)
             }
         }
+        
         if(firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & powerUpCategory) == 4 {
             torpedoDidCollideWithPowerUp(torpedoNode: firstBody.node as! SKSpriteNode, powerUpNode: secondBody.node as! SKSpriteNode)
         }
@@ -535,8 +560,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bossTorpedoDidCollideWithPlayer(playerNode: firstBody.node as! SKSpriteNode, torpedoNode: secondBody.node as! SKSpriteNode)
         }
         if(firstBody.categoryBitMask & photonTorpedoCategory) == 1 && (secondBody.categoryBitMask & bossTorpedoCategory) == 16 {
-            torpedoDidCollideWithTorpedo(torpedoNode: firstBody.node as! SKSpriteNode, bossTorpedoNode: secondBody.node as! SKSpriteNode)
-            
+            if(Constants.spaceship!.laser){
+                if(secondBody.node != nil) {
+                    torpedosToKill.append(secondBody.node as! SKSpriteNode)
+                    torpedoDidCollideWithTorpedo(toKillArray: torpedosToKill)
+                } else {
+                    torpedoDidCollideWithTorpedo(torpedoNode: firstBody.node as? SKSpriteNode)
+                }
+            } else {
+                torpedosToKill.append(secondBody.node as! SKSpriteNode)
+                torpedoDidCollideWithTorpedo(torpedoNode: firstBody.node as? SKSpriteNode, toKillArray: torpedosToKill)
+            }
         }
     }
     
@@ -555,64 +589,77 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         loseLife()
     }
     
-    func torpedoDidCollideWithTorpedo(torpedoNode:SKSpriteNode, bossTorpedoNode:SKSpriteNode) {
+    func torpedoDidCollideWithTorpedo(torpedoNode:SKSpriteNode? = nil , toKillArray:[SKSpriteNode]? = nil) {
         
-        let explosion = SKEmitterNode(fileNamed: "selectItem")!
-        explosion.position = torpedoNode.position
-        self.addChild(explosion)
+        torpedoNode?.removeFromParent()
         
-        bossTorpedoNode.removeFromParent()
-        torpedoNode.removeFromParent()
-        
-        self.run(SKAction.wait(forDuration: 1)) {
-            explosion.removeFromParent()
+        for node in toKillArray! {
+            let explosion = SKEmitterNode(fileNamed: "selectItem")!
+            explosion.position = node.position
+            self.addChild(explosion)
+            node.removeFromParent()
+            self.run(SKAction.wait(forDuration: 1)) {
+                explosion.removeFromParent()
+            }
         }
+        
+        
+        
     }
     
     var bossAlive = false
     var bosslifes = 3
-    func torpedoDidCollideWithAlien (torpedoNode:SKSpriteNode, alienNode:SKSpriteNode) {
+    func torpedoDidCollideWithAlien(torpedoNode:SKSpriteNode? = nil, tokillArray:[SKSpriteNode]? = nil) {
         
         if bossAlive==true {
             if bosslifes > 1 {
-                let explosion = SKEmitterNode(fileNamed: "bossExplosion")!
-                explosion.position = alienNode.position
-                self.addChild(explosion)
-                
-                self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
-                
-                let positiondeadBoss = alienNode.position
-                let bosskid = SKSpriteNode(imageNamed: "alien2")
-                bosskid.position = positiondeadBoss
-                self.addChild(bosskid)
-                
-                torpedoNode.removeFromParent()
-                alienNode.removeFromParent()
-                isUserInteractionEnabled = false
+                torpedoNode?.removeFromParent()
+                for node in tokillArray! {
+                    let explosion = SKEmitterNode(fileNamed: "bossExplosion")!
+                    explosion.position = node.position
+                    self.addChild(explosion)
                     
+                    self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+                    
+                    let positiondeadBoss = node.position
+                    let bosskid = SKSpriteNode(imageNamed: "alien2")
+                    bosskid.position = positiondeadBoss
+                    self.addChild(bosskid)
+                    
+                    node.removeFromParent()
+                    isUserInteractionEnabled = false
+                    
+                    self.run(SKAction.wait(forDuration: 2)) {
+                        explosion.removeFromParent()
+                        self.addBoss()
+                    }
+                }
+                
+                
                 bosslifes -= 1
                 
-                self.run(SKAction.wait(forDuration: 2)) {
-                    explosion.removeFromParent()
-                    self.addBoss()
-                }
+                
                 self.run(SKAction.wait(forDuration: 7)) {
                     self.isUserInteractionEnabled = true
                 }
             } else {
-                let explosion = SKEmitterNode(fileNamed: "Explosion")!
-                explosion.position = alienNode.position
-                self.addChild(explosion)
-                self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
-                torpedoNode.removeFromParent()
-                alienNode.removeFromParent()
+                torpedoNode?.removeFromParent()
                 
-                self.run(SKAction.wait(forDuration: 2)) {
-                    explosion.removeFromParent()
+                for node in tokillArray! {
+                    let explosion = SKEmitterNode(fileNamed: "Explosion")!
+                    explosion.position = node.position
+                    self.addChild(explosion)
+                    self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+                    node.removeFromParent()
+                    self.run(SKAction.wait(forDuration: 2)) {
+                        explosion.removeFromParent()
+                    }
                 }
+                
+                
                 if bossTorpedoTimer != nil {
-                bossTorpedoTimer.invalidate()
-                bossTorpedoTimer = nil
+                    bossTorpedoTimer.invalidate()
+                    bossTorpedoTimer = nil
                 }
                 for i in 0...bossTorpedoArray.count - 1 {
                     bossTorpedoArray[i].removeFromParent()
@@ -620,7 +667,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 score += 100000
                 bosslifes = 0
                 bossAlive = false
-
+                
                 let animationDuration:TimeInterval = 5
                 
                 var actionArray = [SKAction]()
@@ -641,19 +688,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         } else {
-            let explosion = SKEmitterNode(fileNamed: "Explosion")!
-            explosion.position = alienNode.position
-            self.addChild(explosion)
-            
-            self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
-            
-            torpedoNode.removeFromParent()
-            alienNode.removeFromParent()
-            
-            self.run(SKAction.wait(forDuration: 2)) {
-                explosion.removeFromParent()
+            torpedoNode?.removeFromParent()
+            for node in tokillArray! {
+                let explosion = SKEmitterNode(fileNamed: "Explosion")!
+                explosion.position = node.position
+                self.addChild(explosion)
+                self.run(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: false))
+                node.removeFromParent()
+                self.run(SKAction.wait(forDuration: 2)) {
+                    explosion.removeFromParent()
+                }
+                score += 100
             }
-            score += 100
         }
     }
     

@@ -15,32 +15,12 @@ import CoreData
 
 class GameRoomTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
     
-    struct Spaceship {
-        
-        var id : Int
-        var name : String
-        var preis : Int
-        var image : String
-        var capacity : Int
-        var damage : Int
-        var ammo : String
-    }
+
     
 //    var items: [String] = ["Spaceship", "roket", "mastership"]
 //    var prices: [Int] = [100,1000,10000]
     
-    var spaceships = [
-        Spaceship(id: 1, name: "Shuttle", preis: 100, image: "shuttle.png", capacity: 50, damage: 10, ammo: "torpedo.png"),
-        Spaceship(id: 2, name: "ship1", preis: 200, image: "ship1.png", capacity: 50, damage: 10, ammo: "ammo1.png"),
-        Spaceship(id: 3, name: "ship2", preis: 500, image: "ship2.png", capacity: 50, damage: 10, ammo: "ammo2.png"),
-        Spaceship(id: 4, name: "ship3", preis: 1000, image: "ship3.png", capacity: 50, damage: 10, ammo: "ammo3.png"),
-        Spaceship(id: 5, name: "ship4", preis: 2000, image: "ship4.png", capacity: 50, damage: 10, ammo: "ammo4.png"),
-        Spaceship(id: 6, name: "ship5", preis: 5000, image: "ship5.png", capacity: 50, damage: 10, ammo: "ammo5.png"),
-        Spaceship(id: 7, name: "ship6", preis: 8000, image: "ship6.png", capacity: 50, damage: 10, ammo: "ammo6.png"),
-        Spaceship(id: 8, name: "ship7", preis: 10000, image: "ship7.png", capacity: 50, damage: 10, ammo: "ammo7.png"),
-        Spaceship(id: 9, name: "ship8", preis: 15000, image: "ship8.png", capacity: 50, damage: 10, ammo: "ammo8.png"),
-        Spaceship(id: 10, name: "ship9", preis: 20000, image: "ship9.png", capacity: 50, damage: 10, ammo: "ammo9.png"),
-    ]
+
     
     
     override init(frame: CGRect, style: UITableView.Style) {
@@ -59,13 +39,13 @@ class GameRoomTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return spaceships.count
+        return Constants.spaceships.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let spaceship = spaceships[indexPath.row]
+        let spaceship = Constants.spaceships[indexPath.row]
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.text = String(spaceship.name)
         cell.textLabel?.textColor = UIColor.white
@@ -77,12 +57,13 @@ class GameRoomTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedSpaceship = self.spaceships[indexPath.row]
+        let selectedSpaceship = Constants.spaceships[indexPath.row]
         ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (selectedSpaceship.image))
         ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (selectedSpaceship.ammo))
         ShopScene.preisNode.text = String(selectedSpaceship.preis)
         ShopScene.spaceName = String(selectedSpaceship.image)
         ShopScene.ammoName = String(selectedSpaceship.ammo)
+        ShopScene.selectedSpaceship = Constants.spaceships[indexPath.row]
         
 //        if(Constants.currentPlayer.score >= self.spaceships[indexPath.row].preis) {
 //            Constants.currentPlayer.spaceship = self.spaceships[indexPath.row].name
@@ -105,18 +86,22 @@ class ShopScene: SKScene {
     
     static var selectedShipNode:SKSpriteNode!
     static var selectedAmmoNode:SKSpriteNode!
+    static var selectedSpaceship:Spaceship?
     
     static var kaufenBtnNode:SKSpriteNode!
     
     static var cashLabelNode:SKLabelNode!
     static var preisNode:SKLabelNode!
-    static var spaceName:String = "shuttle"
-    static var ammoName:String = "torpedo"
+    static var spaceName:String = ""
+    static var ammoName:String = ""
 
     var starfield: SKEmitterNode!
     
     override func didMove(to view: SKView) {
         
+//        ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (Constants.spaceship!.image))
+//        ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (Constants.spaceship!.ammo))
+
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
             label.alpha = 0.0
@@ -203,6 +188,8 @@ class ShopScene: SKScene {
                     Constants.currentPlayer.ammo = ShopScene.ammoName
                     Constants.currentPlayer.score -= Int32(preis)
                     ShopScene.cashLabelNode.text = String(Constants.currentPlayer.score)
+                    Constants.spaceship = ShopScene.selectedSpaceship!
+                    
                 
                 explosion.position = (nodesArray.first?.position)!
                 self.addChild(explosion)

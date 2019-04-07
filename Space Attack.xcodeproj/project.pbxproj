@@ -17,6 +17,7 @@
 		86CEE2221D9FC6550096FC63 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86CEE2201D9FC6550096FC63 /* explosion.mp3 */; };
 		86CEE2231D9FC6550096FC63 /* torpedo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86CEE2211D9FC6550096FC63 /* torpedo.mp3 */; };
 		86CEE2271D9FC6770096FC63 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 86CEE2251D9FC6770096FC63 /* spark.png */; };
+		D76255EC225A02FF00F7BAE1 /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76255EB225A02FF00F7BAE1 /* Spaceship.swift */; };
 		D7B91B8620841E5C003BD255 /* dessert.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7B91B8520841E5C003BD255 /* dessert.sks */; };
 		D7DD73CD207EB20C008C100B /* lose.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7DD73CC207EB20C008C100B /* lose.mp3 */; };
 		D7DD73D1207EB470008C100B /* upgrade.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7DD73D0207EB470008C100B /* upgrade.mp3 */; };
@@ -50,6 +51,7 @@
 		86CEE2201D9FC6550096FC63 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 		86CEE2211D9FC6550096FC63 /* torpedo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = torpedo.mp3; sourceTree = "<group>"; };
 		86CEE2251D9FC6770096FC63 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		D76255EB225A02FF00F7BAE1 /* Spaceship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
 		D7B91B8520841E5C003BD255 /* dessert.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = dessert.sks; sourceTree = "<group>"; };
 		D7DD73CC207EB20C008C100B /* lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose.mp3; sourceTree = "<group>"; };
 		D7DD73D0207EB470008C100B /* upgrade.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = upgrade.mp3; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		86CEE2071D9FC6210096FC63 /* SpacegameReloaded */ = {
 			isa = PBXGroup;
 			children = (
+				D76255EB225A02FF00F7BAE1 /* Spaceship.swift */,
 				D7E3129F22582070009B8B2F /* Helpers */,
 				86CEE2081D9FC6210096FC63 /* AppDelegate.swift */,
 				86CEE2101D9FC6210096FC63 /* GameViewController.swift */,
@@ -281,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D76255EC225A02FF00F7BAE1 /* Spaceship.swift in Sources */,
 				D7DD742E2080CD4E008C100B /* ShopScene.swift in Sources */,
 				D7FD8434207D6787007F7045 /* GameOverScene.swift in Sources */,
 				86CEE20F1D9FC6210096FC63 /* GameScene.swift in Sources */,

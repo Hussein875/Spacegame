@@ -35,18 +35,19 @@ class MenuScene: SKScene {
         }
         
 //        create new Player
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "Player", in: context)
-        let newUser = NSManagedObject(entity: entity!, insertInto: context)
-        
-        newUser.setValue("torpedo", forKey: "ammo")
-        newUser.setValue("shuttle", forKey: "spaceship")
-        newUser.setValue(1, forKey: "level")
-        newUser.setValue(0, forKey: "score")
-        
-        Constants.players.append(newUser as! Player)
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let context = appDelegate.persistentContainer.viewContext
+//
+//        let entity = NSEntityDescription.entity(forEntityName: "Player", in: context)
+//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+//
+//        newUser.setValue("torpedo", forKey: "ammo")
+//        newUser.setValue("shuttle", forKey: "spaceship")
+//        newUser.setValue(1, forKey: "level")
+//        newUser.setValue(0, forKey: "score")
+//
+//        Constants.players.append(newUser as! Player)
+
         
         starfield = self.childNode(withName: "starfield") as? SKEmitterNode
         starfield.advanceSimulationTime(10)
@@ -82,6 +83,10 @@ class MenuScene: SKScene {
         if Constants.players[0].level == 0 {
             setUp()
         }
+        
+        if Constants.spaceship == nil {
+            Constants.spaceship = Constants.spaceships.first
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -107,6 +112,7 @@ class MenuScene: SKScene {
     }
     
     func setUp(){
+        Constants.spaceship = Constants.spaceships.first
         Constants.players[0].score = 0
         scoreLabelNode.text = String(Constants.players[0].score)
         Constants.players[0].level = 1
