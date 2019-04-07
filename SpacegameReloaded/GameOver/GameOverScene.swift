@@ -36,7 +36,7 @@ class GameOverScene: SKScene {
             print("Could not save data \(error.localizedDescription)")
         }
         
-        gameResultLabelNode = self.childNode(withName: "gameResultLabel") as! SKLabelNode
+        gameResultLabelNode = self.childNode(withName: "gameResultLabel") as? SKLabelNode
         if(win){
             gameResultLabelNode.text = "YOU WIN"
         } else {

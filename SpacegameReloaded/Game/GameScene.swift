@@ -46,6 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var nextLevelTimer:Timer!
     
     var possibleAliens = ["alien", "alien2", "alien3"]
+
     var possiblePowerUps: [Int:String] = [0:"double",1:"heart"]
     
     let alienCategory:UInt32 = 0x1 << 1
@@ -106,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         starfield.zPosition = -1
         
-        let spaceship = Constants.currentPlayer.spaceship! + ".png"
+        let spaceship = Constants.currentPlayer.spaceship!
         player = SKSpriteNode(imageNamed: spaceship)
         player.position = CGPoint(x: self.frame.size.width / 2, y: player.size.height / 2 + 20)
         self.addChild(player)
@@ -299,7 +300,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func fireBossTopedos(alienboss: SKSpriteNode){
         bossTorpedoTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { (Timer) in
-            let bossTorpedoNode = SKSpriteNode(imageNamed: "yellow")
+            let bossTorpedoNode = SKSpriteNode(imageNamed: "bossammo1")
             
             bossTorpedoNode.position = alienboss.position
             bossTorpedoNode.position.y -= 5
@@ -522,7 +523,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if (firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & alienCategory) != 0 {
+            //Firstbody is null, weil Torpedeo beide Aliens trifft und null wird.
+            if(firstBody.node != nil) {
             torpedoDidCollideWithAlien(torpedoNode: firstBody.node as! SKSpriteNode, alienNode: secondBody.node as! SKSpriteNode)
+            }
         }
         if(firstBody.categoryBitMask & photonTorpedoCategory) != 0 && (secondBody.categoryBitMask & powerUpCategory) == 4 {
             torpedoDidCollideWithPowerUp(torpedoNode: firstBody.node as! SKSpriteNode, powerUpNode: secondBody.node as! SKSpriteNode)
@@ -613,7 +617,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 for i in 0...bossTorpedoArray.count - 1 {
                     bossTorpedoArray[i].removeFromParent()
                 }
-                score += 50
+                score += 100000
                 bosslifes = 0
                 bossAlive = false
 
@@ -649,7 +653,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.run(SKAction.wait(forDuration: 2)) {
                 explosion.removeFromParent()
             }
-            score += 50
+            score += 100
         }
     }
     

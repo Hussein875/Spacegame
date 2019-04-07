@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576285406.890203"
+            timestampString = "576291378.027747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "660"
-            endingLineNumber = "660"
+            startingLineNumber = "664"
+            endingLineNumber = "664"
             landmarkName = "torpedoDidCollideWithPowerUp(torpedoNode:powerUpNode:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpacegameReloaded/Game/GameScene.swift"
+            timestampString = "576291378.027825"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "576"
+            endingLineNumber = "576"
+            landmarkName = "torpedoDidCollideWithAlien(torpedoNode:alienNode:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
