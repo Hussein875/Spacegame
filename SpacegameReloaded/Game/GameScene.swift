@@ -470,7 +470,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let torpedoNode4 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
         let torpedoNode5 = SKSpriteNode(imageNamed: Constants.currentPlayer.ammo!)
 
-        var torpedoArray:[SKSpriteNode] = []
+        // var torpedoArray:[SKSpriteNode] = []
    
         switch Constants.currentPlayer.ammo! {
         case "ammo9.png":

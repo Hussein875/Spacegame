@@ -188,7 +188,7 @@ class ShopScene: SKScene {
                     Constants.currentPlayer.spaceship = ShopScene.spaceName
                     Constants.currentPlayer.ammo = ShopScene.ammoName
                     Constants.currentPlayer.score -= Int32(preis)
-                    Constants.currentPlayer.shipid = Int32(ShopScene.selectedSpaceship?.id as! Int)
+                    Constants.currentPlayer.shipid = Int32(ShopScene.selectedSpaceship!.id )
                     ShopScene.cashLabelNode.text = String(Constants.currentPlayer.score)
                     
                 

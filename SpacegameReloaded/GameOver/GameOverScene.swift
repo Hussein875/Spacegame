@@ -44,16 +44,16 @@ class GameOverScene: SKScene {
 
         }
         
-        starfield = self.childNode(withName: "starfield") as! SKEmitterNode
+        starfield = self.childNode(withName: "starfield") as? SKEmitterNode
         starfield.advanceSimulationTime(10)
         
-        scoreLabelNode = self.childNode(withName: "scoreLabel") as! SKLabelNode
+        scoreLabelNode = self.childNode(withName: "scoreLabel") as? SKLabelNode
         scoreLabelNode.text = "\(score)"
         
-        newGameButtonNode = self.childNode(withName: "newGameButton") as! SKSpriteNode
+        newGameButtonNode = self.childNode(withName: "newGameButton") as? SKSpriteNode
         newGameButtonNode.texture = SKTexture(imageNamed: "newGameButton")
         
-        backToMenuButtonNode = self.childNode(withName: "backToMenuButton") as! SKSpriteNode
+        backToMenuButtonNode = self.childNode(withName: "backToMenuButton") as? SKSpriteNode
         backToMenuButtonNode.texture = SKTexture(imageNamed: "startmenuButton")
         
     }
