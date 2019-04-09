@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576336980.320236"
+            timestampString = "576523011.674564"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "853"
-            endingLineNumber = "853"
+            startingLineNumber = "851"
+            endingLineNumber = "851"
             landmarkName = "torpedoDidCollideWithPowerUp(torpedoNode:powerUpNode:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576336980.320735"
+            timestampString = "576523011.674994"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "757"
-            endingLineNumber = "757"
+            startingLineNumber = "755"
+            endingLineNumber = "755"
             landmarkName = "torpedoDidCollideWithAlien(torpedoNode:tokillArray:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576336980.321128"
+            timestampString = "576523011.675312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "834"
-            endingLineNumber = "834"
+            startingLineNumber = "832"
+            endingLineNumber = "832"
             landmarkName = "torpedoDidCollideWithAlien(torpedoNode:tokillArray:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Menu/MenuScene.swift"
-            timestampString = "576336980.321443"
+            timestampString = "576523011.6756279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "124"
@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Shop/ShopScene.swift"
-            timestampString = "576336980.321502"
+            timestampString = "576368476.374193"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576336980.321551"
+            timestampString = "576523011.675704"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "92"
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576336980.321824"
+            timestampString = "576523011.675997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
@@ -122,12 +122,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpacegameReloaded/Game/GameScene.swift"
-            timestampString = "576336980.32209"
+            timestampString = "576523011.676284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "670"
-            endingLineNumber = "670"
-            landmarkName = "didBegin(_:)"
+            startingLineNumber = "601"
+            endingLineNumber = "601"
+            landmarkName = "fireTorpedo()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpacegameReloaded/Game/GameScene.swift"
+            timestampString = "576523011.6765881"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "496"
+            endingLineNumber = "496"
+            landmarkName = "fireTorpedo()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SpacegameReloaded/Game/GameScene.swift"
+            timestampString = "576523070.743979"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "502"
+            endingLineNumber = "502"
+            landmarkName = "fireTorpedo()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
