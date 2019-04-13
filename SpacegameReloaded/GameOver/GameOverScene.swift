@@ -50,11 +50,11 @@ class GameOverScene: SKScene {
         scoreLabelNode = self.childNode(withName: "scoreLabel") as? SKLabelNode
         scoreLabelNode.text = "\(score)"
         
-        newGameButtonNode = self.childNode(withName: "newGameButton") as? SKSpriteNode
-        newGameButtonNode.texture = SKTexture(imageNamed: "newGameButton")
+        newGameButtonNode = self.childNode(withName: "button_nochmal") as? SKSpriteNode
+        newGameButtonNode.texture = SKTexture(imageNamed: "button_nochmal")
         
-        backToMenuButtonNode = self.childNode(withName: "backToMenuButton") as? SKSpriteNode
-        backToMenuButtonNode.texture = SKTexture(imageNamed: "startmenuButton")
+        backToMenuButtonNode = self.childNode(withName: "button_startmenu") as? SKSpriteNode
+        backToMenuButtonNode.texture = SKTexture(imageNamed: "button_startmenu")
         
     }
     
@@ -63,11 +63,11 @@ class GameOverScene: SKScene {
         if let location = touch?.location(in: self) {
             let node = self.nodes(at: location)
             
-            if node[0].name == "newGameButton" {
+            if node[0].name == "button_nochmal" {
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                 let gameScene = GameScene(size: self.size)
                 self.view!.presentScene(gameScene, transition: transition)
-            } else if node[0].name == "backToMenuButton" {
+            } else if node[0].name == "button_startmenu" {
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                 let menuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
                 self.view?.presentScene(menuScene, transition: transition)

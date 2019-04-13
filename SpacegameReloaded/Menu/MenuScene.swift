@@ -25,14 +25,13 @@ class MenuScene: SKScene {
     var levelLabelNode:SKLabelNode!
     
     
-    //Load ship from Core Data by ID
-    func loadShip(){
-        Constants.spaceship = Constants.spaceships[Int(Constants.currentPlayer.shipid)]
-    }
-    
+    //Load ship from Core Data by Name
+//    func loadShip(){
+//        Constants.spaceship = LocalDatabase.sharedInstance.getSpaceshipbyName(name: Constants.currentPlayer.shipname)
+//    }
+//
     override func didMove(to view: SKView) {
         
-
         managedObjectContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         do {
@@ -42,33 +41,19 @@ class MenuScene: SKScene {
             print("Could not save data \(error.localizedDescription)")
         }
         
-                loadShip()
-//        create new Player
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = appDelegate.persistentContainer.viewContext
-//
-//        let entity = NSEntityDescription.entity(forEntityName: "Player", in: context)
-//        let newUser = NSManagedObject(entity: entity!, insertInto: context)
-//
-//        newUser.setValue("torpedo", forKey: "ammo")
-//        newUser.setValue("shuttle", forKey: "spaceship")
-//        newUser.setValue(1, forKey: "level")
-//        newUser.setValue(0, forKey: "score")
-//
-//        Constants.players.append(newUser as! Player)
+//        loadShip()
 
-        
         starfield = self.childNode(withName: "starfield") as? SKEmitterNode
         starfield.advanceSimulationTime(10)
         
-        newGameButtonNode = self.childNode(withName: "newGameButton") as? SKSpriteNode
-        newGameButtonNode.texture = SKTexture(imageNamed: "newGameButton")
+        newGameButtonNode = self.childNode(withName: "button_spiel-starten") as? SKSpriteNode
+        newGameButtonNode.texture = SKTexture(imageNamed: "button_spiel-starten")
         
-        shopButtonNode = self.childNode(withName: "shopButton") as? SKSpriteNode
-        shopButtonNode.texture = SKTexture(imageNamed: "shopButton")
+        shopButtonNode = self.childNode(withName: "button_spaceshop") as? SKSpriteNode
+        shopButtonNode.texture = SKTexture(imageNamed: "button_spaceshop")
         
-        difficultyButtonNode = self.childNode(withName: "difficultyButton") as? SKSpriteNode
-        difficultyButtonNode.texture = SKTexture(imageNamed: "difficultyButton")
+        difficultyButtonNode = self.childNode(withName: "button_schwierigkeit") as? SKSpriteNode
+        difficultyButtonNode.texture = SKTexture(imageNamed: "button_schwierigkeit")
         
         difficultyLabelNode = self.childNode(withName: "difficultyLabel") as? SKLabelNode
         
@@ -78,8 +63,8 @@ class MenuScene: SKScene {
         levelLabelNode = self.childNode(withName: "levelLabel") as? SKLabelNode
         levelLabelNode.text = String(Constants.players[0].level)
         
-        resetButtonNode = self.childNode(withName: "resetButton") as? SKSpriteNode
-        resetButtonNode.texture = SKTexture(imageNamed: "resetButton")
+        resetButtonNode = self.childNode(withName: "button_reset-game") as? SKSpriteNode
+        resetButtonNode.texture = SKTexture(imageNamed: "button_reset-game")
         
         let userDefaults = UserDefaults.standard
         
@@ -104,15 +89,15 @@ class MenuScene: SKScene {
         if let location = touch?.location(in: self) {
             let nodesArray = self.nodes(at: location)
             
-            if nodesArray.first?.name == "newGameButton" {
+            if nodesArray.first?.name == "button_spiel-starten" {
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                 let gameScene = GameScene(size: self.size)
                 self.view?.presentScene(gameScene, transition: transition)
-            } else if nodesArray.first?.name == "difficultyButton" {
+            } else if nodesArray.first?.name == "button_schwierigkeit" {
                 changeDifficulty()
-            } else if nodesArray.first?.name == "resetButton" {
+            } else if nodesArray.first?.name == "button_reset-game" {
                 setUp()
-            } else if nodesArray.first?.name == "shopButton" {
+            } else if nodesArray.first?.name == "button_spaceshop" {
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                 let shopScene = SKScene(fileNamed: "ShopScene") as! ShopScene
                 self.view?.presentScene(shopScene, transition: transition)
@@ -121,6 +106,7 @@ class MenuScene: SKScene {
     }
     
     func setUp(){
+        LocalDatabase.sharedInstance.dropTable()
         Constants.spaceship = Constants.spaceships.first
         Constants.players[0].score = 0
         scoreLabelNode.text = String(Constants.players[0].score)
@@ -128,13 +114,15 @@ class MenuScene: SKScene {
         levelLabelNode.text = String(Constants.players[0].level)
         Constants.players[0].ammo = "torpedo"
         Constants.players[0].spaceship = "shuttle"
+        Constants.players[0].shipname = "Shuttle"
+
         do {
             try self.managedObjectContext.save()
         } catch {
             print("Could not save data \(error.localizedDescription)")
         }
     }
-
+    
     func changeDifficulty(){
         let userDefaults = UserDefaults.standard
         

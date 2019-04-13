@@ -18,6 +18,11 @@
 		86CEE2231D9FC6550096FC63 /* torpedo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 86CEE2211D9FC6550096FC63 /* torpedo.mp3 */; };
 		86CEE2271D9FC6770096FC63 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 86CEE2251D9FC6770096FC63 /* spark.png */; };
 		D76255EC225A02FF00F7BAE1 /* Spaceship.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76255EB225A02FF00F7BAE1 /* Spaceship.swift */; };
+		D76DD619225D422A00FB8A73 /* LocalDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76DD618225D422A00FB8A73 /* LocalDataBase.swift */; };
+		D76DD6B022611CBF00FB8A73 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D76DD6A322611C9000FB8A73 /* SQLite.framework */; };
+		D76DD6B122611CCC00FB8A73 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D76DD6A322611C9000FB8A73 /* SQLite.framework */; };
+		D76DD6B222611CCC00FB8A73 /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D76DD6A322611C9000FB8A73 /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D79FEFFB225D41C500B3A756 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D79FEFFA225D41C500B3A756 /* Assets.xcassets */; };
 		D7B91B8620841E5C003BD255 /* dessert.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7B91B8520841E5C003BD255 /* dessert.sks */; };
 		D7DD73CD207EB20C008C100B /* lose.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7DD73CC207EB20C008C100B /* lose.mp3 */; };
 		D7DD73D1207EB470008C100B /* upgrade.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D7DD73D0207EB470008C100B /* upgrade.mp3 */; };
@@ -29,7 +34,6 @@
 		D7DD742C2080CD31008C100B /* ShopScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7DD742B2080CD31008C100B /* ShopScene.sks */; };
 		D7DD742E2080CD4E008C100B /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DD742D2080CD4E008C100B /* ShopScene.swift */; };
 		D7DD743120810E3F008C100B /* selectItem.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7DD743020810E3F008C100B /* selectItem.sks */; };
-		D7DD7433208113C7008C100B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DD7432208113C7008C100B /* Assets.xcassets */; };
 		D7E312A3225820E6009B8B2F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E312A2225820E6009B8B2F /* Constants.swift */; };
 		D7EDE2A220856E0900A4CC2D /* bossExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7EDE2A120856E0900A4CC2D /* bossExplosion.sks */; };
 		D7FD8429207D5925007F7045 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7FD8428207D5925007F7045 /* MenuScene.sks */; };
@@ -37,6 +41,79 @@
 		D7FD8432207D676F007F7045 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7FD8431207D676F007F7045 /* GameOverScene.sks */; };
 		D7FD8434207D6787007F7045 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FD8433207D6787007F7045 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D76DD6A222611C9000FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247AD31C3F04ED00AE3E12;
+			remoteInfo = "SQLite iOS";
+		};
+		D76DD6A422611C9000FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247ADD1C3F04ED00AE3E12;
+			remoteInfo = "SQLiteTests iOS";
+		};
+		D76DD6A622611C9000FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247B3C1C3F3ED000AE3E12;
+			remoteInfo = "SQLite Mac";
+		};
+		D76DD6A822611C9000FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE247B451C3F3ED000AE3E12;
+			remoteInfo = "SQLiteTests Mac";
+		};
+		D76DD6AA22611C9000FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03A65E5A1C6BB0F50062603F;
+			remoteInfo = "SQLite tvOS";
+		};
+		D76DD6AC22611C9000FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03A65E631C6BB0F60062603F;
+			remoteInfo = "SQLiteTests tvOS";
+		};
+		D76DD6AE22611C9000FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A121AC451CA35C79005A31D1;
+			remoteInfo = "SQLite watchOS";
+		};
+		D76DD6B322611CCC00FB8A73 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = EE247AD21C3F04ED00AE3E12;
+			remoteInfo = "SQLite iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D76DD676225D49FA00FB8A73 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D76DD6B222611CCC00FB8A73 /* SQLite.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		86CEE2051D9FC6210096FC63 /* Space Attack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Space Attack.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +129,9 @@
 		86CEE2211D9FC6550096FC63 /* torpedo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = torpedo.mp3; sourceTree = "<group>"; };
 		86CEE2251D9FC6770096FC63 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		D76255EB225A02FF00F7BAE1 /* Spaceship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spaceship.swift; sourceTree = "<group>"; };
+		D76DD618225D422A00FB8A73 /* LocalDataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalDataBase.swift; sourceTree = "<group>"; };
+		D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../../Downloads/SQLite-2.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
+		D79FEFFA225D41C500B3A756 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = SpacegameReloaded/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		D7B91B8520841E5C003BD255 /* dessert.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = dessert.sks; sourceTree = "<group>"; };
 		D7DD73CC207EB20C008C100B /* lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lose.mp3; sourceTree = "<group>"; };
 		D7DD73D0207EB470008C100B /* upgrade.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = upgrade.mp3; sourceTree = "<group>"; };
@@ -63,7 +143,6 @@
 		D7DD742B2080CD31008C100B /* ShopScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShopScene.sks; sourceTree = "<group>"; };
 		D7DD742D2080CD4E008C100B /* ShopScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
 		D7DD743020810E3F008C100B /* selectItem.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = selectItem.sks; sourceTree = "<group>"; };
-		D7DD7432208113C7008C100B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Sounds/Assets.xcassets; sourceTree = "<group>"; };
 		D7E312A2225820E6009B8B2F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D7EDE2A120856E0900A4CC2D /* bossExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = bossExplosion.sks; sourceTree = "<group>"; };
 		D7FD8428207D5925007F7045 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
@@ -77,6 +156,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D76DD6B122611CCC00FB8A73 /* SQLite.framework in Frameworks */,
+				D76DD6B022611CBF00FB8A73 /* SQLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +169,8 @@
 			children = (
 				86CEE2071D9FC6210096FC63 /* SpacegameReloaded */,
 				86CEE2061D9FC6210096FC63 /* Products */,
+				D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */,
+				D76DD68F225D4ADE00FB8A73 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,7 +185,6 @@
 		86CEE2071D9FC6210096FC63 /* SpacegameReloaded */ = {
 			isa = PBXGroup;
 			children = (
-				D76255EB225A02FF00F7BAE1 /* Spaceship.swift */,
 				D7E3129F22582070009B8B2F /* Helpers */,
 				86CEE2081D9FC6210096FC63 /* AppDelegate.swift */,
 				86CEE2101D9FC6210096FC63 /* GameViewController.swift */,
@@ -113,13 +195,34 @@
 				D7DD742F2080D0A3008C100B /* Shop */,
 				D7FD8435207D68EF007F7045 /* GameOver */,
 				D7FD8426207D58F6007F7045 /* Emmitters */,
+				D79FEFFA225D41C500B3A756 /* Assets.xcassets */,
 				D7FD8427207D5901007F7045 /* Sounds */,
-				D7DD7432208113C7008C100B /* Assets.xcassets */,
 				86CEE2171D9FC6210096FC63 /* LaunchScreen.storyboard */,
 				D7DD73D2207EB68E008C100B /* PlayerModel.xcdatamodeld */,
 				86CEE21A1D9FC6210096FC63 /* Info.plist */,
 			);
 			path = SpacegameReloaded;
+			sourceTree = "<group>";
+		};
+		D76DD68F225D4ADE00FB8A73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D76DD69922611C9000FB8A73 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D76DD6A322611C9000FB8A73 /* SQLite.framework */,
+				D76DD6A522611C9000FB8A73 /* SQLiteTests iOS.xctest */,
+				D76DD6A722611C9000FB8A73 /* SQLite.framework */,
+				D76DD6A922611C9000FB8A73 /* SQLiteTests Mac.xctest */,
+				D76DD6AB22611C9000FB8A73 /* SQLite.framework */,
+				D76DD6AD22611C9000FB8A73 /* SQLiteTests tvOS.xctest */,
+				D76DD6AF22611C9000FB8A73 /* SQLite.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D7DD742F2080D0A3008C100B /* Shop */ = {
@@ -134,6 +237,8 @@
 		D7E3129F22582070009B8B2F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D76DD618225D422A00FB8A73 /* LocalDataBase.swift */,
+				D76255EB225A02FF00F7BAE1 /* Spaceship.swift */,
 				D7E312A2225820E6009B8B2F /* Constants.swift */,
 			);
 			path = Helpers;
@@ -202,10 +307,12 @@
 				86CEE2011D9FC6210096FC63 /* Sources */,
 				86CEE2021D9FC6210096FC63 /* Frameworks */,
 				86CEE2031D9FC6210096FC63 /* Resources */,
+				D76DD676225D49FA00FB8A73 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D76DD6B422611CCC00FB8A73 /* PBXTargetDependency */,
 			);
 			name = "Space Attack";
 			productName = SpacegameReloaded;
@@ -242,12 +349,70 @@
 			mainGroup = 86CEE1FC1D9FC6210096FC63;
 			productRefGroup = 86CEE2061D9FC6210096FC63 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D76DD69922611C9000FB8A73 /* Products */;
+					ProjectRef = D76DD69822611C9000FB8A73 /* SQLite.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				86CEE2041D9FC6210096FC63 /* Space Attack */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D76DD6A322611C9000FB8A73 /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = D76DD6A222611C9000FB8A73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D76DD6A522611C9000FB8A73 /* SQLiteTests iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLiteTests iOS.xctest";
+			remoteRef = D76DD6A422611C9000FB8A73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D76DD6A722611C9000FB8A73 /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = D76DD6A622611C9000FB8A73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D76DD6A922611C9000FB8A73 /* SQLiteTests Mac.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLiteTests Mac.xctest";
+			remoteRef = D76DD6A822611C9000FB8A73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D76DD6AB22611C9000FB8A73 /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = D76DD6AA22611C9000FB8A73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D76DD6AD22611C9000FB8A73 /* SQLiteTests tvOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SQLiteTests tvOS.xctest";
+			remoteRef = D76DD6AC22611C9000FB8A73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D76DD6AF22611C9000FB8A73 /* SQLite.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SQLite.framework;
+			remoteRef = D76DD6AE22611C9000FB8A73 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		86CEE2031D9FC6210096FC63 /* Resources */ = {
@@ -268,11 +433,11 @@
 				D7DD73D1207EB470008C100B /* upgrade.mp3 in Resources */,
 				D7EDE2A220856E0900A4CC2D /* bossExplosion.sks in Resources */,
 				D7B91B8620841E5C003BD255 /* dessert.sks in Resources */,
+				D79FEFFB225D41C500B3A756 /* Assets.xcassets in Resources */,
 				D7FD8429207D5925007F7045 /* MenuScene.sks in Resources */,
 				86CEE20D1D9FC6210096FC63 /* Actions.sks in Resources */,
 				D7DD742C2080CD31008C100B /* ShopScene.sks in Resources */,
 				D7DD73CD207EB20C008C100B /* lose.mp3 in Resources */,
-				D7DD7433208113C7008C100B /* Assets.xcassets in Resources */,
 				D7DD7421207FFD52008C100B /* end.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,6 +451,7 @@
 			files = (
 				D76255EC225A02FF00F7BAE1 /* Spaceship.swift in Sources */,
 				D7DD742E2080CD4E008C100B /* ShopScene.swift in Sources */,
+				D76DD619225D422A00FB8A73 /* LocalDataBase.swift in Sources */,
 				D7FD8434207D6787007F7045 /* GameOverScene.swift in Sources */,
 				86CEE20F1D9FC6210096FC63 /* GameScene.swift in Sources */,
 				D7FD842B207D5CE9007F7045 /* MenuScene.swift in Sources */,
@@ -297,6 +463,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D76DD6B422611CCC00FB8A73 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SQLite iOS";
+			targetProxy = D76DD6B322611CCC00FB8A73 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		86CEE2121D9FC6210096FC63 /* Main.storyboard */ = {
@@ -432,8 +606,13 @@
 		86CEE21E1D9FC6210096FC63 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = MG6BB56CA6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SpacegameReloaded/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "hussein-s-live.de";
@@ -445,8 +624,13 @@
 		86CEE21F1D9FC6210096FC63 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = MG6BB56CA6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SpacegameReloaded/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "hussein-s-live.de";

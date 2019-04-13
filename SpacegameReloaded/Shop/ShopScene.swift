@@ -15,12 +15,12 @@ import CoreData
 
 class GameRoomTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
     
-
     
-//    var items: [String] = ["Spaceship", "roket", "mastership"]
-//    var prices: [Int] = [100,1000,10000]
     
-
+    //    var items: [String] = ["Spaceship", "roket", "mastership"]
+    //    var prices: [Int] = [100,1000,10000]
+    
+    
     
     
     override init(frame: CGRect, style: UITableView.Style) {
@@ -48,28 +48,43 @@ class GameRoomTableView: UITableView,UITableViewDelegate,UITableViewDataSource {
         let spaceship = Constants.spaceships[indexPath.row]
         cell.backgroundColor = UIColor.clear
         cell.textLabel?.text = String(spaceship.name)
-        cell.textLabel?.textColor = UIColor.white
+        
+        if(LocalDatabase.sharedInstance.getSpaceshipbyName(name: spaceship.name) != nil){
+            cell.textLabel?.textColor = UIColor.green
+        } else {
+            cell.textLabel?.textColor = UIColor.white
+        }
         //cell.selectionStyle = .none
         cell.imageView?.image = UIImage(named: spaceship.image)
-
+        
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        LocalDatabase.sharedInstance.listownedships()
         let selectedSpaceship = Constants.spaceships[indexPath.row]
-        ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (selectedSpaceship.image))
-        ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (selectedSpaceship.ammo))
-        ShopScene.preisNode.text = String(selectedSpaceship.preis)
-        ShopScene.spaceName = String(selectedSpaceship.image)
-        ShopScene.ammoName = String(selectedSpaceship.ammo)
-        ShopScene.selectedSpaceship = Constants.spaceships[indexPath.row]
-        
-//        if(Constants.currentPlayer.score >= self.spaceships[indexPath.row].preis) {
-//            Constants.currentPlayer.spaceship = self.spaceships[indexPath.row].name
-//            Constants.currentPlayer.ammo = self.spaceships[indexPath.row].ammo
-//        Constants.currentPlayer.score -= Int32(self.spaceships[indexPath.row].preis)
-//        }
+        if let selectedSpaceship = LocalDatabase.sharedInstance.getSpaceshipbyName(name: selectedSpaceship.name) {
+            print(selectedSpaceship)
+            ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (selectedSpaceship.image))
+            ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (selectedSpaceship.ammo))
+            ShopScene.preisNode.text = String(selectedSpaceship.preis)
+            ShopScene.spaceName = String(selectedSpaceship.image)
+            ShopScene.ammoName = String(selectedSpaceship.ammo)
+            ShopScene.selectedSpaceship = selectedSpaceship
+            
+            ShopScene.kaufenBtnNode.texture = SKTexture(imageNamed:"button_auswaehlen")
+        } else {
+            ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (selectedSpaceship.image))
+            ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (selectedSpaceship.ammo))
+            ShopScene.preisNode.text = String(selectedSpaceship.preis)
+            ShopScene.spaceName = String(selectedSpaceship.image)
+            ShopScene.ammoName = String(selectedSpaceship.ammo)
+            ShopScene.selectedSpaceship = Constants.spaceships[indexPath.row]
+            
+            ShopScene.kaufenBtnNode.texture = SKTexture(imageNamed:"button_kaufen")
+            
+        }
     }
 }
 
@@ -94,14 +109,11 @@ class ShopScene: SKScene {
     static var preisNode:SKLabelNode!
     static var spaceName:String = ""
     static var ammoName:String = ""
-
+    
     var starfield: SKEmitterNode!
     
     override func didMove(to view: SKView) {
         
-//        ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (Constants.spaceship!.image))
-//        ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (Constants.spaceship!.ammo))
-
         self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
         if let label = self.label {
             label.alpha = 0.0
@@ -133,33 +145,19 @@ class ShopScene: SKScene {
         
         starfield.zPosition = -1
         
-        backToMenuButtonNode = self.childNode(withName: "backToMenuButton") as? SKSpriteNode
-        backToMenuButtonNode.texture = SKTexture(imageNamed: "startmenuButton")
+        backToMenuButtonNode = self.childNode(withName: "button_startmenu") as? SKSpriteNode
+        backToMenuButtonNode.texture = SKTexture(imageNamed: "button_startmenu")
         
-        ShopScene.kaufenBtnNode = self.childNode(withName: "kaufenBtn") as? SKSpriteNode
-        ShopScene.kaufenBtnNode.texture = SKTexture(imageNamed: "kaufenbtn")
+        ShopScene.kaufenBtnNode = self.childNode(withName: "button_kaufen") as? SKSpriteNode
+        ShopScene.kaufenBtnNode.texture = SKTexture(imageNamed:"button_kaufen")
         
         ShopScene.preisNode = self.childNode(withName: "preisLabelNode") as? SKLabelNode
         ShopScene.preisNode.text = "Preis"
         
-//        ship1Node = self.childNode(withName: "ship1") as? SKSpriteNode
-//        ship2Node = self.childNode(withName: "ship2") as? SKSpriteNode
-//        ship3Node = self.childNode(withName: "ship3") as? SKSpriteNode
-//        ammo1Node = self.childNode(withName: "ammo1") as? SKSpriteNode
-//        ammo2Node = self.childNode(withName: "ammo2") as? SKSpriteNode
-//        ammo3Node = self.childNode(withName: "ammo3") as? SKSpriteNode
-        
- //       dollarNode1 = self.childNode(withName: "dollar1") as? SKSpriteNode
-//        dollarNode2 = self.childNode(withName: "dollar2") as! SKSpriteNode
-//        dollarNode3 = self.childNode(withName: "dollar3") as! SKSpriteNode
-//        dollarNode4 = self.childNode(withName: "dollar4") as! SKSpriteNode
-//        dollarNode5 = self.childNode(withName: "dollar5") as! SKSpriteNode
-//        dollarNode6 = self.childNode(withName: "dollar6") as! SKSpriteNode
-
         ShopScene.selectedAmmoNode = self.childNode(withName: "selectedAmmo") as? SKSpriteNode
-//        selectedAmmoNode.texture = SKTexture(imageNamed: (players[0].ammo)!)
+        ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (Constants.players[0].ammo)!)
         ShopScene.selectedShipNode = self.childNode(withName: "selectedShip") as? SKSpriteNode
-//        selectedShipNode.texture = SKTexture(imageNamed: (players[0].spaceship)!)
+        ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (Constants.players[0].spaceship)!)
         
         ShopScene.cashLabelNode = self.childNode(withName: "cashLabel") as? SKLabelNode
         ShopScene.cashLabelNode.text = String(Constants.currentPlayer.score)
@@ -173,40 +171,58 @@ class ShopScene: SKScene {
         if let location = touch?.location(in: self) {
             let nodesArray = self.nodes(at: location)
             let explosion = SKEmitterNode(fileNamed: "selectItem")!
-
-
+            
+            
             switch nodesArray.first?.name{
-            case "backToMenuButton":
+            case "button_startmenu":
                 let transition = SKTransition.flipHorizontal(withDuration: 0.5)
                 let menuScene = SKScene(fileNamed: "MenuScene") as! MenuScene
                 gameTableView.isHidden = true
                 self.view?.presentScene(menuScene, transition: transition)
-            case "kaufenBtn":
-                let preis : Int = Int(ShopScene.preisNode.text ?? "9999")!
-                if Constants.currentPlayer.score >= preis {
-                    Constants.spaceship = ShopScene.selectedSpaceship!
-                    Constants.currentPlayer.spaceship = ShopScene.spaceName
-                    Constants.currentPlayer.ammo = ShopScene.ammoName
-                    Constants.currentPlayer.score -= Int32(preis)
-                    Constants.currentPlayer.shipid = Int32(ShopScene.selectedSpaceship!.id )
-                    ShopScene.cashLabelNode.text = String(Constants.currentPlayer.score)
+                break
+            case "button_kaufen":
+                if ShopScene.selectedSpaceship?.owned == true {
+                    print("Ship ausgewählt!")
+                    if let spaceship = ShopScene.selectedSpaceship{
+                        Constants.spaceship = spaceship
+                        Constants.currentPlayer.spaceship = spaceship.image
+                        Constants.currentPlayer.ammo = spaceship.ammo
+                        Constants.currentPlayer.shipname = spaceship.name
+                    }
+                } else {
+                    if let preis = Int(ShopScene.preisNode.text!) {
+                        if Constants.currentPlayer.score >= preis {
+                            
+                            if var spaceship = ShopScene.selectedSpaceship{
+                                Constants.spaceship = spaceship
+                                Constants.currentPlayer.spaceship = spaceship.image
+                                Constants.currentPlayer.ammo = spaceship.ammo
+                                Constants.currentPlayer.score -= Int32(preis)
+                                Constants.currentPlayer.shipname = spaceship.name
+                                ShopScene.cashLabelNode.text = String(Constants.currentPlayer.score)
+                                spaceship.owned = true
+                                Constants.spaceships[spaceship.id].owned = true
+                                
+                                ShopScene.selectedSpaceship = spaceship
+                                ShopScene.kaufenBtnNode.texture = SKTexture(imageNamed:"button_auswaehlen")
+                                
+                                LocalDatabase.sharedInstance.insertSpaceship(spaceship: spaceship)
+                            }
+                        }
+                    } else {
+                        print("Nicht genug Geld")
+                    }
                     
-                
+                }
                 explosion.position = (nodesArray.first?.position)!
                 self.addChild(explosion)
-                } else {
-                    print("Schiff kostet 100 Taken Bra!")
-                }
+                break
             default: break
             }
-//            ShopScene.selectedShipNode.texture = SKTexture(imageNamed: (Constants.currentPlayer.spaceship)!)
-//            ShopScene.selectedAmmoNode.texture = SKTexture(imageNamed: (Constants.currentPlayer.ammo)!)
-
-            
             self.run(SKAction.wait(forDuration: 1)) {
                 explosion.removeFromParent()
             }
-
+            
             do {
                 try self.managedObjectContext.save()
             } catch {
@@ -215,7 +231,7 @@ class ShopScene: SKScene {
             
         }
     }
-
+    
     
     func loadData(){
         let playerRequest:NSFetchRequest<Player> = Player.fetchRequest()

@@ -27,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var ammoLabel: SKLabelNode!
     var ammoCountLabel: SKLabelNode!
-    var ammoCount: Int = 100
+    var ammoCount: Int = Constants.spaceship!.capacity
     
     var alienSpeed = 6
     
@@ -116,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         
         scoreLabel = SKLabelNode(text: "Score: 0")
-        scoreLabel.position = CGPoint(x: 80, y: self.frame.size.height - 70)
+        scoreLabel.position = CGPoint(x: 100, y: self.frame.size.height - 70)
         scoreLabel.fontName = "AmericanTypewriter-Bold"
         scoreLabel.fontSize = 28
         scoreLabel.fontColor = UIColor.white
@@ -162,7 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //        powerUpTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(addPowerUp), userInfo: nil, repeats: true)
         nextLevelTimer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(nextLevel), userInfo: nil, repeats: true)
         gameTimer = Timer.scheduledTimer(withTimeInterval: ammoTimerIntervall, repeats: true, block: { (Timer) in
-            if(self.ammoCount < 100){
+            if(self.ammoCount < Constants.spaceship!.capacity){
                 self.ammoCount += 1
                 self.ammoCountLabel.text = "\(self.ammoCount)"
             }
@@ -659,6 +659,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     func didBegin(_ contact: SKPhysicsContact) {
+        
+        Constants.spaceship = LocalDatabase.sharedInstance.getSpaceshipbyName(name: Constants.currentPlayer.shipname!)
         var firstBody:SKPhysicsBody
         var secondBody:SKPhysicsBody
         

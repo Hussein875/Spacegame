@@ -8,12 +8,31 @@
 
 import UIKit
 import SpriteKit
+import CoreData
 import GameplayKit
 
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        LocalDatabase.sharedInstance.initilizeDatabase()
+
+        if Constants.players.count == 0 {
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let entity = NSEntityDescription.entity(forEntityName: "Player", in: context)
+            let newUser = NSManagedObject(entity: entity!, insertInto: context)
+            
+            newUser.setValue("torpedo", forKey: "ammo")
+            newUser.setValue("shuttle", forKey: "spaceship")
+            newUser.setValue(1, forKey: "level")
+            newUser.setValue(0, forKey: "score")
+            
+            Constants.players.append(newUser as! Player)
+        }
+        
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -33,7 +52,7 @@ class GameViewController: UIViewController {
     }
 
     override var shouldAutorotate: Bool {
-        return false
+        return true
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

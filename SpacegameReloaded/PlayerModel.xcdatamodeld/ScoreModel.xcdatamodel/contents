@@ -4,7 +4,7 @@
         <attribute name="ammo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="level" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="shipid" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="shipname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="spaceship" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
